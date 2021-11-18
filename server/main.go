@@ -8,6 +8,9 @@ import (
 	"os/signal"
 	"time"
 
+	adr "fairlabs-server/adapter"
+	"fairlabs-server/api"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
@@ -16,13 +19,19 @@ const (
 	serverPort = 8080
 )
 
-func main() {
-	e := echo.New()
-
+func registerAll(e *echo.Echo) {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK,
 			"I am api server and i have a dream")
 	})
+	api.RegisterPath(e, adr.LookupGoalsKind, adr.LookupGoalsController{})
+	api.RegisterPath(e, adr.ProgressKind, adr.ProgressController{})
+}
+
+func main() {
+	e := echo.New()
+
+	registerAll(e)
 
 	go func() {
 		address := fmt.Sprintf("localhost:%d", serverPort)
