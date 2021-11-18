@@ -34,7 +34,7 @@ func main() {
 	registerAll(e)
 
 	go func() {
-		address := fmt.Sprintf("localhost:%d", serverPort)
+		address := fmt.Sprintf(":%d", serverPort)
 		fmt.Println(address)
 		if err := e.Start(address); err != nil {
 			log.Info("shutting down the server")
