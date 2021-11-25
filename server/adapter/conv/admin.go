@@ -36,19 +36,31 @@ func (r *AdminAddRequest) ToCourseInfo() *spec.CourseInfo {
 	return &courseInfo
 }
 
-func (r *AdminAlgoPostRequest) ToAlgo() *spec.Algo {
+func (r *AdminAlgoPostRequest) ToAlgo() (*spec.Context, *spec.Algo) {
+	var context spec.Context
 	var algo spec.Algo
+	context.Email = r.UserEmail
+	context.Name = r.UserName
+	context.Group = r.UserGroup
+	context.CourseId = r.UserCourseId
+	//TODO remove double context unmarshal
 	algo.Id = r.Id
 	algo.Name = r.Name
-	return &algo
+	return &context, &algo
 }
 
-func (r *AdminConditionPostRequest) ToCondition() *spec.Condition {
+func (r *AdminConditionPostRequest) ToCondition() (*spec.Context, *spec.Condition) {
+	var context spec.Context
 	var condition spec.Condition
+	context.Email = r.UserEmail
+	context.Name = r.UserName
+	context.Group = r.UserGroup
+	context.CourseId = r.UserCourseId
+
 	condition.Id = r.Id
 	condition.Name = r.Name
 	condition.Data = r.Data
-	return &condition
+	return &context, &condition
 }
 
 type AdminAlgoGetResponse struct {

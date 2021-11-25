@@ -1,6 +1,7 @@
 package adapter
 
 import (
+	"fairlabs-server/adapter/conv"
 	"fairlabs-server/api"
 	"net/http"
 
@@ -39,6 +40,12 @@ type ConditionGetController struct{}
 type ConditionPostController struct{}
 
 func (k AddController) Handle(c echo.Context) error {
+	addRequest := new(conv.AdminAddRequest)
+
+	if err := c.Bind(addRequest); err != nil {
+		return c.JSON(http.StatusBadRequest, "Bad request")
+	}
+
 	return c.JSON(http.StatusOK, "1")
 }
 func (k AlgoGetController) Handle(c echo.Context) error {
