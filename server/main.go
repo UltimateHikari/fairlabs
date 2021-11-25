@@ -24,7 +24,7 @@ func registerAll(e *echo.Echo) {
 		return c.String(http.StatusOK,
 			"I am api server and i have a dream")
 	})
-	api.RegisterPath(e, adr.LookupGoalsKind, adr.LookupGoalsController{})
+	api.RegisterPath(e, adr.LookupGoalKind, adr.LookupGoalsController{})
 	api.RegisterPath(e, adr.ProgressKind, adr.ProgressController{})
 }
 

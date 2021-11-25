@@ -11,9 +11,14 @@ const (
 	Post
 )
 
+type Group struct {
+	Prefix string
+}
+
 type Kind struct {
 	Action   ActionType
 	Endpoint string
+	Group    Group
 }
 
 type Controller interface {
@@ -21,10 +26,11 @@ type Controller interface {
 }
 
 func RegisterPath(e *echo.Echo, k Kind, c Controller) {
+	group := e.Group(k.Group.Prefix)
 	switch k.Action {
 	case Get:
-		e.GET(k.Endpoint, c.Handle)
+		group.GET(k.Endpoint, c.Handle)
 	case Post:
-		e.POST(k.Endpoint, c.Handle)
+		group.POST(k.Endpoint, c.Handle)
 	}
 }
