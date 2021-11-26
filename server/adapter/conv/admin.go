@@ -29,27 +29,18 @@ type AdminConditionPostRequest struct {
 	AdminCondition
 }
 
-func (c *UserContext) toContext() *spec.Context {
-	var context spec.Context
-	context.Email = c.UserEmail
-	context.Name = c.UserName
-	context.Group = c.UserGroup
-	context.CourseId = c.UserCourseId
-	return &context
-}
-
 func (r *AdminAddRequest) ToCourseInfo() (*spec.Context, *spec.CourseInfo) {
 	var courseInfo spec.CourseInfo
 	courseInfo.Id = r.Id
 	courseInfo.Name = r.Name
-	return r.toContext(), &courseInfo
+	return r.ToContext(), &courseInfo
 }
 
 func (r *AdminAlgoPostRequest) ToAlgo() (*spec.Context, *spec.Algo) {
 	var algo spec.Algo
 	algo.Id = r.Id
 	algo.Name = r.Name
-	return r.toContext(), &algo
+	return r.ToContext(), &algo
 }
 
 func (r *AdminConditionPostRequest) ToCondition() (*spec.Context, *spec.Condition) {
@@ -57,7 +48,7 @@ func (r *AdminConditionPostRequest) ToCondition() (*spec.Context, *spec.Conditio
 	condition.Id = r.Id
 	condition.Name = r.Name
 	condition.Data = r.Data
-	return r.toContext(), &condition
+	return r.ToContext(), &condition
 }
 
 type AdminAlgoGetResponse struct {

@@ -1,7 +1,9 @@
 package adapter
 
 import (
+	"fairlabs-server/adapter/conv"
 	"fairlabs-server/api"
+	"fairlabs-server/logic"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -38,21 +40,81 @@ type PriorityController struct{}
 type GoalController struct{}
 
 func (k LookupGoalController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "-4")
+	contextRequest := new(conv.UserContext)
+
+	if err := c.Bind(contextRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	goal, err := logic.LookupGoalService(contextRequest.ToContext())
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.JSON(http.StatusOK, goal)
 }
 
 func (k LookupStatsController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "-3")
+	contextRequest := new(conv.UserContext)
+
+	if err := c.Bind(contextRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	cstats, err := logic.LookupStatsService(contextRequest.ToContext())
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.JSON(http.StatusOK, cstats)
 }
 
 func (k ProgressController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "-2")
+	contextRequest := new(conv.UserContext)
+
+	if err := c.Bind(contextRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	progress, err := logic.ProgressService(contextRequest.ToContext())
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.JSON(http.StatusOK, progress)
 }
 
 func (k PriorityController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "-1")
+	priorityRequest := new(conv.MiscPriorityRequest)
+
+	if err := c.Bind(priorityRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	context, priority := priorityRequest.ToPriority()
+
+	if err := logic.PriorityService(context, priority); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.NoContent(http.StatusOK)
 }
 
 func (k GoalController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "0")
+	goalRequest := new(conv.MiscGoalRequest)
+
+	if err := c.Bind(goalRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	context, goal := goalRequest.ToGoal()
+
+	if err := logic.GoalService(context, goal); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.NoContent(http.StatusOK)
 }

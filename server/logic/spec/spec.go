@@ -1,5 +1,6 @@
 package spec
 
+//Admin's
 type CourseInfo struct {
 	Id   int
 	Name string
@@ -14,7 +15,7 @@ type Algo struct {
 type Condition struct {
 	Id   int
 	Name string
-	Data []string
+	Data []string // Condition-specific
 }
 
 type Context struct {
@@ -22,4 +23,39 @@ type Context struct {
 	Name     string
 	Group    int
 	CourseId int
+}
+
+//Misc's
+type CStatsDTO struct {
+	Progress []ProgressDTO
+	Forecast Forecast
+}
+
+type Forecast struct {
+	IsPositive bool
+}
+
+type ProgressDTO struct {
+	Name  string
+	Goal  GoalProgress
+	Conds []ConditionProgress
+}
+
+type GoalProgress struct {
+	Current int
+	Max     int
+}
+
+type ConditionProgress struct {
+	Data []string // Condition-specific
+}
+
+type Goal struct {
+	Mark int
+}
+
+type Course struct {
+	id    int
+	name  string
+	group int
 }
