@@ -55,7 +55,17 @@ type Goal struct {
 }
 
 type Course struct {
-	id    int
-	name  string
-	group int
+	Id    int
+	Name  string
+	Group int
+}
+
+//tasks
+type QueueEntry struct {
+	Name          string
+	IsPrioritized bool
+}
+
+type Queue struct {
+	Queue []QueueEntry
 }

@@ -52,7 +52,7 @@ func (k LookupGoalController) Handle(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
 	}
 
-	return c.JSON(http.StatusOK, goal)
+	return c.JSON(http.StatusOK, conv.ToMiscGoal(goal))
 }
 
 func (k LookupStatsController) Handle(c echo.Context) error {
@@ -68,7 +68,7 @@ func (k LookupStatsController) Handle(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
 	}
 
-	return c.JSON(http.StatusOK, cstats)
+	return c.JSON(http.StatusOK, conv.ToMiscCStats(cstats))
 }
 
 func (k ProgressController) Handle(c echo.Context) error {
@@ -84,7 +84,7 @@ func (k ProgressController) Handle(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
 	}
 
-	return c.JSON(http.StatusOK, progress)
+	return c.JSON(http.StatusOK, conv.ToMiscProgress(progress))
 }
 
 func (k PriorityController) Handle(c echo.Context) error {
