@@ -31,7 +31,15 @@ func registerAll(e *echo.Echo) {
 	api.RegisterPath(e, adr.ConditionPostKind, adr.ConditionPostController{})
 
 	api.RegisterPath(e, adr.LookupGoalKind, adr.LookupGoalController{})
+	api.RegisterPath(e, adr.LookupStatsKind, adr.LookupStatsController{})
 	api.RegisterPath(e, adr.ProgressKind, adr.ProgressController{})
+	api.RegisterPath(e, adr.PriorityKind, adr.PriorityController{})
+	api.RegisterPath(e, adr.GoalKind, adr.GoalController{})
+
+	api.RegisterPath(e, adr.QueueKind, adr.QueueController{})
+	api.RegisterPath(e, adr.MyCoursesGetKind, adr.MyCoursesGetController{})
+	api.RegisterPath(e, adr.AllCoursesGetKind, adr.AllCoursesGetController{})
+	api.RegisterPath(e, adr.FollowKind, adr.FollowController{})
 }
 
 func main() {
