@@ -3,6 +3,7 @@ package adapter
 import (
 	"fairlabs-server/adapter/conv"
 	"fairlabs-server/api"
+	"fairlabs-server/logic"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -43,20 +44,69 @@ func (k AddController) Handle(c echo.Context) error {
 	addRequest := new(conv.AdminAddRequest)
 
 	if err := c.Bind(addRequest); err != nil {
-		return c.JSON(http.StatusBadRequest, "Bad request")
+		//TODO remove verbose message left for debug purpose
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
 	}
 
-	return c.JSON(http.StatusOK, "1")
+	context, courseInfo := addRequest.ToCourseInfo()
+
+	if err := logic.AddService(context, courseInfo); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.NoContent(http.StatusOK)
 }
+
 func (k AlgoGetController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "2")
+	algos, err := logic.AlgoGetService()
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	algosResponse := conv.ToAlgoResponse(algos)
+	return c.JSON(http.StatusOK, algosResponse)
 }
+
 func (k AlgoPostController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "3")
+	algoRequest := new(conv.AdminAlgoPostRequest)
+
+	if err := c.Bind(algoRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	context, algo := algoRequest.ToAlgo()
+
+	if err := logic.AlgoPostService(context, algo); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.NoContent(http.StatusOK)
 }
+
 func (k ConditionGetController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "4")
+	conds, err := logic.ConditionGetService()
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	condsResponse := conv.ToConditionResponse(conds)
+	return c.JSON(http.StatusOK, condsResponse)
 }
+
 func (k ConditionPostController) Handle(c echo.Context) error {
-	return c.JSON(http.StatusOK, "5")
+	condRequest := new(conv.AdminConditionPostRequest)
+
+	if err := c.Bind(condRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	context, cond := condRequest.ToCondition()
+
+	if err := logic.ConditionPostService(context, cond); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.NoContent(http.StatusOK)
 }

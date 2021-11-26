@@ -29,38 +29,35 @@ type AdminConditionPostRequest struct {
 	AdminCondition
 }
 
-func (r *AdminAddRequest) ToCourseInfo() *spec.CourseInfo {
+func (c *UserContext) toContext() *spec.Context {
+	var context spec.Context
+	context.Email = c.UserEmail
+	context.Name = c.UserName
+	context.Group = c.UserGroup
+	context.CourseId = c.UserCourseId
+	return &context
+}
+
+func (r *AdminAddRequest) ToCourseInfo() (*spec.Context, *spec.CourseInfo) {
 	var courseInfo spec.CourseInfo
 	courseInfo.Id = r.Id
 	courseInfo.Name = r.Name
-	return &courseInfo
+	return r.toContext(), &courseInfo
 }
 
 func (r *AdminAlgoPostRequest) ToAlgo() (*spec.Context, *spec.Algo) {
-	var context spec.Context
 	var algo spec.Algo
-	context.Email = r.UserEmail
-	context.Name = r.UserName
-	context.Group = r.UserGroup
-	context.CourseId = r.UserCourseId
-	//TODO remove double context unmarshal
 	algo.Id = r.Id
 	algo.Name = r.Name
-	return &context, &algo
+	return r.toContext(), &algo
 }
 
 func (r *AdminConditionPostRequest) ToCondition() (*spec.Context, *spec.Condition) {
-	var context spec.Context
 	var condition spec.Condition
-	context.Email = r.UserEmail
-	context.Name = r.UserName
-	context.Group = r.UserGroup
-	context.CourseId = r.UserCourseId
-
 	condition.Id = r.Id
 	condition.Name = r.Name
 	condition.Data = r.Data
-	return &context, &condition
+	return r.toContext(), &condition
 }
 
 type AdminAlgoGetResponse struct {

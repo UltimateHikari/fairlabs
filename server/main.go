@@ -24,7 +24,13 @@ func registerAll(e *echo.Echo) {
 		return c.String(http.StatusOK,
 			"I am api server and i have a dream")
 	})
-	api.RegisterPath(e, adr.LookupGoalKind, adr.LookupGoalsController{})
+	api.RegisterPath(e, adr.AddKind, adr.AddController{})
+	api.RegisterPath(e, adr.AlgoGetKind, adr.AlgoGetController{})
+	api.RegisterPath(e, adr.AlgoPostKind, adr.AlgoPostController{})
+	api.RegisterPath(e, adr.ConditionGetKind, adr.ConditionGetController{})
+	api.RegisterPath(e, adr.ConditionPostKind, adr.ConditionPostController{})
+
+	api.RegisterPath(e, adr.LookupGoalKind, adr.LookupGoalController{})
 	api.RegisterPath(e, adr.ProgressKind, adr.ProgressController{})
 }
 

@@ -2,22 +2,25 @@ package logic
 
 import "fairlabs-server/logic/spec"
 
-func AddService(c *spec.CourseInfo) {
+func AddService(context *spec.Context, c *spec.CourseInfo) error {
 	//TODO:stub
+	return nil
 }
 
-func AlgoGetService() []spec.Algo {
-	return []spec.Algo{}
+func AlgoGetService() ([]spec.Algo, error) {
+	return []spec.Algo{}, nil
 }
 
-func ConditionGetService() []spec.Condition {
-	return []spec.Condition{}
+func ConditionGetService() ([]spec.Condition, error) {
+	return []spec.Condition{}, nil
 }
 
-func AlgoPostService(context *spec.Context, algo *spec.Algo) {
+func AlgoPostService(context *spec.Context, algo *spec.Algo) error {
 	// TODO:stub
+	return nil
 }
 
-func CondPostService(context *spec.Context, algo *spec.Algo) {
+func ConditionPostService(context *spec.Context, algo *spec.Condition) error {
 	// TODO:stub
+	return nil
 }
