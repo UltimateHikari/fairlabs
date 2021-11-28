@@ -17,11 +17,12 @@ CREATE TABLE conds(
 
 --todo add tasks count
 CREATE TABLE courses(
-    course_id SERIAL PRIMARY KEY,
-    course_name text NOT NULL,
-    university_group integer NOT NULL,
+    course_id SERIAL,
+    course_name text,
+    university_group integer,
     algo integer REFERENCES algos (algo_id),
-    cond_id integer REFERENCES conds (cond_id)
+    cond_id integer REFERENCES conds (cond_id),
+    PRIMARY KEY (course_name, university_group)
 );
 
 CREATE TABLE users(
@@ -53,9 +54,9 @@ INSERT INTO conds (cond_id, cond_name, example_data)
     VALUES(2, 'task_amounts', 
     '{"6:3", "11:4", "23:5"}');
 
-INSERT INTO users (user_id, email, user_name, is_admin)
+INSERT INTO users (email, user_name, is_admin)
     VALUES ('a.rudometov@g.nsu.ru', 'Andrey Rudometov', TRUE);
-INSERT INTO users (user_id, email, user_name)
+INSERT INTO users (email, user_name)
     VALUES ('a.ogneva@g.nsu.ru', 'Anastasia Ogneva');
 
 INSERT INTO groups (group_number, user_number, user_role)
@@ -68,8 +69,8 @@ INSERT INTO courses(course_name, university_group)
 INSERT INTO courses(course_name, university_group)
     VALUES ('OkcawCourse', 19212);
 
-
-
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fairlabs;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO fairlabs;
 
 
 

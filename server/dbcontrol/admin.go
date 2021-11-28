@@ -9,10 +9,11 @@ import (
 )
 
 const (
-	is_admin_query = "SELECT COUNT(*) FROM users WHERE users.email = $1 AND users.is_admin = TRUE;"
-	get_algo_query = `SELECT * FROM algos;`
-	get_cond_query = `SELECT * FROM conds;`
-	create_query   = "INSERT INTO courses(course_name, university_group) VALUES($1,$2)"
+	is_admin_query       = "SELECT COUNT(*) FROM users WHERE users.email = $1 AND users.is_admin = TRUE;"
+	get_algo_query       = `SELECT * FROM algos;`
+	get_cond_query       = `SELECT * FROM conds;`
+	create_query         = "INSERT INTO courses(course_name, university_group) VALUES($1,$2)"
+	create_get_tag_query = "SELECT course_id FROM courses WHERE course_name = $1 AND university_group = $2"
 )
 
 func (c *DBControl) IsAdmin(email string) bool {
@@ -50,10 +51,24 @@ func (c *DBControl) GetConditions() ([]*spec.Condition, error) {
 	return conds, err
 }
 
-func (c *DBControl) CreateCourse(cinfo *spec.CourseInfo) error {
+func (c *DBControl) CreateCourse(cinfo *spec.CourseInfo) (int, error) {
 	var err error
-	if _, err = c.pool.Exec(context.Background(), create_query, cinfo.Name, cinfo.Group); err != nil {
+	var count int
+	if _, err = c.pool.Exec(
+		context.Background(),
+		create_query,
+		cinfo.Name,
+		cinfo.Group); err != nil {
+		log.Error(err)
+		return count, err
+	}
+	if err = c.pool.QueryRow(
+		context.Background(),
+		create_get_tag_query,
+		cinfo.Name,
+		cinfo.Group).Scan(&count); err != nil {
 		log.Error(err)
 	}
-	return err
+
+	return count, err
 }

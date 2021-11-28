@@ -78,3 +78,11 @@ func ToConditionResponse(conditions []*spec.Condition) *AdminConditionGetRespons
 	}
 	return &response
 }
+
+func ToCourse(course *spec.Course) *TasksCourse {
+	var res TasksCourse
+	res.Id = course.Id
+	res.Name = course.Name
+	res.CourseGroup = course.Group
+	return &res
+}

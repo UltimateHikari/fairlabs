@@ -51,12 +51,13 @@ func (k AddController) Handle(c echo.Context) error {
 	}
 
 	context, courseInfo := addRequest.ToCourseInfo()
+	course, err := logic.AddService(context, courseInfo)
 
-	if err := logic.AddService(context, courseInfo); err != nil {
+	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
 	}
 
-	return c.NoContent(http.StatusOK)
+	return c.JSON(http.StatusOK, conv.ToCourse(course))
 }
 
 func (k AlgoGetController) Handle(c echo.Context) error {
