@@ -2,20 +2,21 @@ package spec
 
 //Admin's
 type CourseInfo struct {
-	Id   int
-	Name string
+	Name  string `db:"course_name"`
+	Group int    `db:"university_group"`
 	//TODO:extend
 }
 
 type Algo struct {
-	Id   int
-	Name string
+	Id   int    `db:"algo_id"`
+	Name string `db:"algo_name"`
 }
 
 type Condition struct {
-	Id   int
-	Name string
-	Data []string // Condition-specific
+	Id   int    `db:"cond_id"`
+	Name string `db:"cond_name"`
+	// Condition-specific
+	Data []string `db:"example_data"`
 }
 
 type Context struct {

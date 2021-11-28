@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
+	"github.com/labstack/gommon/log"
 )
 
 var AdminGroup = api.Group{Prefix: "v1/admin"}
@@ -14,7 +15,7 @@ var AdminGroup = api.Group{Prefix: "v1/admin"}
 //Control-Admin-Server
 var AddKind = api.Kind{
 	Action:   api.Post,
-	Endpoint: "",
+	Endpoint: "/add",
 	Group:    AdminGroup}
 var AlgoGetKind = api.Kind{
 	Action:   api.Get,
@@ -45,6 +46,7 @@ func (k AddController) Handle(c echo.Context) error {
 
 	if err := c.Bind(addRequest); err != nil {
 		//TODO remove verbose message left for debug purpose
+		log.Error(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
 	}
 

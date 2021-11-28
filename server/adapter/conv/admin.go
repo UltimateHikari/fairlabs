@@ -4,8 +4,8 @@ import "fairlabs-server/logic/spec"
 
 type AdminAddRequest struct {
 	UserContext
-	Id   int    `json:"id"`
-	Name string `json:"name"`
+	Name  string `json:"name"`
+	Group int    `json:"group"`
 }
 
 type AdminAlgo struct {
@@ -31,7 +31,7 @@ type AdminConditionPostRequest struct {
 
 func (r *AdminAddRequest) ToCourseInfo() (*spec.Context, *spec.CourseInfo) {
 	var courseInfo spec.CourseInfo
-	courseInfo.Id = r.Id
+	courseInfo.Group = r.Group
 	courseInfo.Name = r.Name
 	return r.ToContext(), &courseInfo
 }
@@ -59,7 +59,7 @@ type AdminConditionGetResponse struct {
 	Conds []AdminCondition `json:"conditions"`
 }
 
-func ToAlgoResponse(algos []spec.Algo) *AdminAlgoGetResponse {
+func ToAlgoResponse(algos []*spec.Algo) *AdminAlgoGetResponse {
 	var response AdminAlgoGetResponse
 	response.Algos = make([]AdminAlgo, len(algos))
 	for i, item := range algos {
@@ -69,7 +69,7 @@ func ToAlgoResponse(algos []spec.Algo) *AdminAlgoGetResponse {
 	return &response
 }
 
-func ToConditionResponse(conditions []spec.Condition) *AdminConditionGetResponse {
+func ToConditionResponse(conditions []*spec.Condition) *AdminConditionGetResponse {
 	var response AdminConditionGetResponse
 	response.Conds = make([]AdminCondition, len(conditions))
 	for i, item := range conditions {

@@ -17,7 +17,7 @@ CREATE TABLE conds(
 
 --todo add tasks count
 CREATE TABLE courses(
-    course_id integer PRIMARY KEY,
+    course_id SERIAL PRIMARY KEY,
     course_name text NOT NULL,
     university_group integer NOT NULL,
     algo integer REFERENCES algos (algo_id),
@@ -25,9 +25,10 @@ CREATE TABLE courses(
 );
 
 CREATE TABLE users(
-    user_id integer PRIMARY KEY,
+    user_id SERIAL PRIMARY KEY,
     email text NOT NULL,
-    user_name text NOT NULL
+    user_name text NOT NULL,
+    is_admin boolean DEFAULT(FALSE)
 );
 
 --role == STUDENT/TEACHER
@@ -52,15 +53,21 @@ INSERT INTO conds (cond_id, cond_name, example_data)
     VALUES(2, 'task_amounts', 
     '{"6:3", "11:4", "23:5"}');
 
+INSERT INTO users (user_id, email, user_name, is_admin)
+    VALUES ('a.rudometov@g.nsu.ru', 'Andrey Rudometov', TRUE);
 INSERT INTO users (user_id, email, user_name)
-    VALUES (1, 'a.rudometov@g.nsu.ru', 'Andrey Rudometov');
-INSERT INTO users (user_id, email, user_name)
-    VALUES (2, 'a.ogneva@g.nsu.ru', 'Anastasia Ogneva');
+    VALUES ('a.ogneva@g.nsu.ru', 'Anastasia Ogneva');
 
 INSERT INTO groups (group_number, user_number, user_role)
     VALUES (19201, 1, 'STUDENT');
 INSERT INTO groups (group_number, user_number, user_role)
     VALUES (19201, 2, 'STUDENT');
+
+INSERT INTO courses(course_name, university_group)
+    VALUES ('WackoCourse', 19201);
+INSERT INTO courses(course_name, university_group)
+    VALUES ('OkcawCourse', 19212);
+
 
 
 

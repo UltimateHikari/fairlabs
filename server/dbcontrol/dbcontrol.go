@@ -2,11 +2,11 @@ package dbcontrol
 
 import (
 	"context"
-	"fairlabs-server/logic/spec"
+	"os"
 	"sync"
 
-	"github.com/georgysavva/scany/pgxscan"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/labstack/gommon/log"
 )
 
 type DBControl struct {
@@ -16,24 +16,27 @@ type DBControl struct {
 var once sync.Once
 var controlInstance *DBControl = nil
 
-func getInstance() *DBControl {
+func GetInstance() *DBControl {
 	if controlInstance == nil {
 		once.Do(
 			func() {
 				controlInstance = &DBControl{}
+				controlInstance.init()
 			})
 	}
 	return controlInstance
 }
 
-func (c *DBControl) connect(pool *pgxpool.Pool) {
-	controlInstance.pool = pool
+func (c *DBControl) init() {
+	urlExample := "postgres://fairlabs:fairlabs@localhost:5432/fairlabs-test"
+	dbpool, err := pgxpool.Connect(context.Background(), urlExample /*os.Getenv("DATABASE_URL")*/)
+	if err != nil {
+		log.Error(err)
+		os.Exit(1)
+	}
+	controlInstance.pool = dbpool
 }
 
-func (c *DBControl) getAlgorithms() ([]*spec.Algo, error) {
-	var algos []*spec.Algo
-	//TODO improve error handling with context
-	ctx := context.Background()
-	pgxscan.Select(ctx, c.pool, &algos, `SELECT * FROM algo`)
-	return algos, nil
+func CloseInstance() {
+	controlInstance.pool.Close()
 }
