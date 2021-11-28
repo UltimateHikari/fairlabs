@@ -11,6 +11,7 @@ import (
 	adr "fairlabs-server/adapter"
 	"fairlabs-server/api"
 
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
@@ -43,13 +44,29 @@ func registerAll(e *echo.Echo) {
 }
 
 func main() {
+	urlExample := "postgres://fairlabs:fairlabs@localhost:5432/fairlabs-test"
+	dbpool, err := pgxpool.Connect(context.Background(), urlExample /*os.Getenv("DATABASE_URL")*/)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+	defer dbpool.Close()
+
+	var greeting string
+	err = dbpool.QueryRow(context.Background(), "select algo_name from algos where algo_id = 1").Scan(&greeting)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println(greeting)
+
 	e := echo.New()
 
 	registerAll(e)
 
 	go func() {
 		address := fmt.Sprintf(":%d", serverPort)
-		fmt.Println(address)
 		if err := e.Start(address); err != nil {
 			log.Info("shutting down the server")
 		}
