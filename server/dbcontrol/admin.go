@@ -12,8 +12,10 @@ const (
 	is_admin_query       = "SELECT COUNT(*) FROM users WHERE users.email = $1 AND users.is_admin = TRUE;"
 	get_algo_query       = `SELECT * FROM algos;`
 	get_cond_query       = `SELECT * FROM conds;`
-	create_query         = "INSERT INTO courses(course_name, university_group) VALUES($1,$2)"
-	create_get_tag_query = "SELECT course_id FROM courses WHERE course_name = $1 AND university_group = $2"
+	create_query         = "INSERT INTO courses(course_name, university_group) VALUES($1,$2);"
+	create_get_tag_query = "SELECT course_id FROM courses WHERE course_name = $1 AND university_group = $2;" //todo really needed?
+	save_algo_query      = "UPDATE courses SET algo = $1 WHERE course_id = $2;"
+	save_cond_query      = "UPDATE courses SET cond_id = $1, cond_data = $2 WHERE course_id = $3;"
 )
 
 func (c *DBControl) IsAdmin(email string) bool {
@@ -71,4 +73,29 @@ func (c *DBControl) CreateCourse(cinfo *spec.CourseInfo) (int, error) {
 	}
 
 	return count, err
+}
+
+func (c *DBControl) SaveAlgo(course_id int, algo_id int) error {
+	var err error
+	if _, err = c.pool.Exec(
+		context.Background(),
+		save_algo_query,
+		algo_id,
+		course_id); err != nil {
+		log.Error(err)
+	}
+	return err
+}
+
+func (c *DBControl) SaveCondition(course_id int, cond *spec.Condition) error {
+	var err error
+	if _, err = c.pool.Exec(
+		context.Background(),
+		save_cond_query,
+		cond.Id,
+		cond.Data,
+		course_id); err != nil { //TODO check array
+		log.Error(err)
+	}
+	return err
 }

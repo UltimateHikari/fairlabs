@@ -75,6 +75,7 @@ func (k AlgoPostController) Handle(c echo.Context) error {
 	algoRequest := new(conv.AdminAlgoPostRequest)
 
 	if err := c.Bind(algoRequest); err != nil {
+		log.Error(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
 	}
 
@@ -102,6 +103,7 @@ func (k ConditionPostController) Handle(c echo.Context) error {
 	condRequest := new(conv.AdminConditionPostRequest)
 
 	if err := c.Bind(condRequest); err != nil {
+		log.Error(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
 	}
 

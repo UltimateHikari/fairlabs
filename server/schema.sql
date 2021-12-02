@@ -22,6 +22,7 @@ CREATE TABLE courses(
     university_group integer,
     algo integer REFERENCES algos (algo_id),
     cond_id integer REFERENCES conds (cond_id),
+    cond_data text[],
     PRIMARY KEY (course_name, university_group)
 );
 

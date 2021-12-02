@@ -3,6 +3,7 @@ package logic
 import (
 	"errors"
 	"fairlabs-server/logic/spec"
+	"fmt"
 
 	db "fairlabs-server/dbcontrol"
 
@@ -53,15 +54,18 @@ func AlgoPostService(context *spec.Context, algo *spec.Algo) error {
 		log.Error(err)
 		return err
 	}
-	//TODO:stub
-	return nil
+	if context.CourseId < 0 || algo.Id < 0 {
+		return errors.New("Insuffitient information:" + fmt.Sprint(context.CourseId) + fmt.Sprint(algo.Id))
+	}
+	err := db.GetInstance().SaveAlgo(context.CourseId, algo.Id)
+	return err
 }
 
-func ConditionPostService(context *spec.Context, algo *spec.Condition) error {
+func ConditionPostService(context *spec.Context, cond *spec.Condition) error {
 	if err := checkPrivilieges(context); err != nil {
 		log.Error(err)
 		return err
 	}
-	// TODO:stub
-	return nil
+	err := db.GetInstance().SaveCondition(context.CourseId, cond)
+	return err
 }
