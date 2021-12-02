@@ -1,3 +1,8 @@
+CREATE DATABASE fairlabs;
+CREATE USER fairlabs WITH PASSWORD 'fairlabs';
+
+\c fairlabs
+
 DROP TABLE IF EXISTS groups;
 DROP TABLE IF EXISTS courses;
 DROP TABLE IF EXISTS users;
@@ -70,6 +75,7 @@ INSERT INTO courses(course_name, university_group)
 INSERT INTO courses(course_name, university_group)
     VALUES ('OkcawCourse', 19212);
 
+GRANT USAGE ON SCHEMA public TO fairlabs;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fairlabs;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO fairlabs;
 

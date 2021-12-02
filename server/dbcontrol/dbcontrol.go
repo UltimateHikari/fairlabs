@@ -28,8 +28,8 @@ func GetInstance() *DBControl {
 }
 
 func (c *DBControl) init() {
-	urlExample := "postgres://fairlabs:fairlabs@localhost:5432/fairlabs-test"
-	dbpool, err := pgxpool.Connect(context.Background(), urlExample /*os.Getenv("DATABASE_URL")*/)
+	log.Info("connecting to: " + os.Getenv("DATABASE_URL"))
+	dbpool, err := pgxpool.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Error(err)
 		os.Exit(1)
