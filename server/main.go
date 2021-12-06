@@ -11,6 +11,8 @@ import (
 	adr "fairlabs-server/adapter"
 	"fairlabs-server/api"
 
+	db "fairlabs-server/dbcontrol"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
@@ -43,13 +45,15 @@ func registerAll(e *echo.Echo) {
 }
 
 func main() {
+	db.GetInstance()
+	defer db.CloseInstance()
+
 	e := echo.New()
 
 	registerAll(e)
 
 	go func() {
 		address := fmt.Sprintf(":%d", serverPort)
-		fmt.Println(address)
 		if err := e.Start(address); err != nil {
 			log.Info("shutting down the server")
 		}

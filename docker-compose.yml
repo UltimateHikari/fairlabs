@@ -1,0 +1,26 @@
+version: "2.2"
+services:
+  back:
+    build: ./server
+    image: server:0.2
+    restart: always
+    environment:
+      - DATABASE_URL=postgres://fairlabs:fairlabs@db:5432/fairlabs
+    ports: ["8080:8080"]
+    networks: ["fairnet"]
+    depends_on:
+      - "db"
+  db:
+    image: postgres:13.4
+    ports: ["5440:5432"]
+    networks: ["fairnet"]
+    volumes:
+      - ./postgres/schema.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: example
+    healthcheck:
+      test: pg_isready -U postgres
+      
+
+networks:
+  fairnet:

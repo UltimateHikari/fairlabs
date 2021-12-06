@@ -1,26 +1,71 @@
 package logic
 
-import "fairlabs-server/logic/spec"
+import (
+	"errors"
+	"fairlabs-server/logic/spec"
+	"fmt"
 
-func AddService(context *spec.Context, c *spec.CourseInfo) error {
-	//TODO:stub
+	db "fairlabs-server/dbcontrol"
+
+	"github.com/labstack/gommon/log"
+)
+
+func checkPrivilieges(context *spec.Context) error {
+	if context.Email == "" {
+		//TODO look closely
+		return errors.New("Bad context: no email")
+	}
+	if !db.GetInstance().IsAdmin(context.Email) {
+		return errors.New(context.Email + " does't have privilieges")
+	}
+
 	return nil
 }
 
-func AlgoGetService() ([]spec.Algo, error) {
-	return []spec.Algo{}, nil
+func AddService(context *spec.Context, c *spec.CourseInfo) (*spec.Course, error) {
+	var res spec.Course
+	if err := checkPrivilieges(context); err != nil {
+		log.Error(err)
+		return &res, err
+	}
+	res.Name = c.Name
+	res.Group = c.Group
+	id, err := db.GetInstance().CreateCourse(c)
+	if err != nil {
+		log.Error(err)
+	} else {
+		res.Id = id
+	}
+	return &res, err
 }
 
-func ConditionGetService() ([]spec.Condition, error) {
-	return []spec.Condition{}, nil
+func AlgoGetService() ([]*spec.Algo, error) {
+	algos, err := db.GetInstance().GetAlgorithms()
+	return algos, err
+}
+
+func ConditionGetService() ([]*spec.Condition, error) {
+	conds, err := db.GetInstance().GetConditions()
+	return conds, err
 }
 
 func AlgoPostService(context *spec.Context, algo *spec.Algo) error {
-	// TODO:stub
-	return nil
+	if err := checkPrivilieges(context); err != nil {
+		log.Error(err)
+		return err
+	}
+	if context.CourseId < 0 || algo.Id < 0 {
+		return errors.New("Insuffitient information:" + fmt.Sprint(context.CourseId) + fmt.Sprint(algo.Id))
+	}
+	err := db.GetInstance().SaveAlgo(context.CourseId, algo.Id)
+	return err
 }
 
-func ConditionPostService(context *spec.Context, algo *spec.Condition) error {
-	// TODO:stub
-	return nil
+func ConditionPostService(context *spec.Context, cond *spec.Condition) error {
+	if err := checkPrivilieges(context); err != nil {
+		log.Error(err)
+		return err
+	}
+	err := db.GetInstance().SaveCondition(context.CourseId, cond)
+	return err
 }
