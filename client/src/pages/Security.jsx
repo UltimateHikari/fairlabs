@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Landing = () => {
+const Security = () => {
     return (
         <h1>
-            Landing
+           go away >:c
         </h1>
     );
 };
 
-export default Landing;
+export default Security;

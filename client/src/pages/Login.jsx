@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const Login = () => {
+
+    const[text, setText] = useState("Please log in")
+
     return (
         <div>
-            <h1>Login</h1>
+            <h1>{text}</h1>
             <button>Log in</button>
         </div>
     );

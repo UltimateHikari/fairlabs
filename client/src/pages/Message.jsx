@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Landing = () => {
+const Message = (props) => {
     return (
         <h1>
-            Landing
+           props.message
         </h1>
     );
 };
 
-export default Landing;
+export default Message;

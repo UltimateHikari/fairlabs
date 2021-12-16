@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Landing = () => {
+const Error = () => {
     return (
         <h1>
-            Landing
+            Error page
         </h1>
     );
 };
 
-export default Landing;
+export default Error;
