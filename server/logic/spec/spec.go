@@ -56,15 +56,15 @@ type Goal struct {
 }
 
 type Course struct {
-	Id    int
-	Name  string
-	Group int
+	Id    int    `db:"course_id"`
+	Name  string `db:"course_name"`
+	Group int    `db:"university_group"`
 }
 
 //tasks
 type QueueEntry struct {
-	Name          string
-	IsPrioritized bool
+	Name          string `db:"user_name"`
+	IsPrioritized bool   `db:"user_priority"`
 }
 
 type Queue struct {
