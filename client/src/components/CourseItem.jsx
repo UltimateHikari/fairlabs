@@ -8,11 +8,12 @@ const CourseItem = (props) => {
     const navigate = useNavigate()
     const {role, setRole} = useContext(AuthContext);
 
-    function getButtons() {
+    function getButtons({}) {
+        let id = props.course.id
         if (role >= 2) {
             return (
                 <div>
-                    <MyButton>
+                    <MyButton onClick={() => navigate('/courses/' + id.toString())}>
                         check
                     </MyButton>
                     <MyButton>
@@ -23,7 +24,7 @@ const CourseItem = (props) => {
         } else {
             return (
                 <div>
-                    <MyButton>
+                    <MyButton onClick={() => navigate('/courses/' + id.toString())}>
                         check
                     </MyButton>
                 </div>
@@ -40,7 +41,7 @@ const CourseItem = (props) => {
                 </div>
             </div>
             <div className={"btns"}>
-                {getButtons()}
+                {getButtons(props.course.id)}
             </div>
         </div>
     );

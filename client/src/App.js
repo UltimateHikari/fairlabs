@@ -5,7 +5,7 @@ import axios from "axios";
 import Comm from "./api/Comm";
 import './styles/App.css';
 import AppRouter from "./router/AppRouter";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {AuthContext} from "./context";
 import Navbar from "./ui/navbar/Navbar";
 
@@ -17,7 +17,14 @@ import Navbar from "./ui/navbar/Navbar";
 function App() {
 
     const [isAuth, setIsAuth] = useState(false);
-    const [role, setRole] = useState(3);
+    const [role, setRole] = useState(2);
+    const [group, setGroup] = useState(19201);
+
+    useEffect( () => {
+        if (localStorage.getItem('auth')){
+            setIsAuth(true)
+        }
+    }, [])
 
     async function fetch(){
         const response = await Comm.getSth()
@@ -30,7 +37,9 @@ function App() {
             isAuth,
             setIsAuth,
             role,
-            setRole
+            setRole,
+            group,
+            setGroup
         }}>
 
             <BrowserRouter>

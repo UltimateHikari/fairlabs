@@ -8,7 +8,7 @@ import CourseItem from "../components/CourseItem";
 const CoursesList = () => {
     return (
         <div className={'Courses'}>
-            <h1 style={{textAlign: 'center'}}> my courses</h1>
+            <h1 style={{textAlign: 'center'}}> all courses</h1>
             <CourseItem course={{id: 1, title: 'Course', body: 'i am coursedfxgcfhvgbhxcvbnmn,fcvgbhjmvgbhn'}}/>
             <CourseItem course={{id: 2, title: 'Course', body: 'i am course'}}/>
         </div>

@@ -2,8 +2,8 @@ import React from 'react';
 
 const Error = () => {
     return (
-        <h1>
-            Error page
+        <h1 className={'h1'}>
+            Sth went wrong:(
         </h1>
     );
 };

@@ -19,12 +19,6 @@ const StudentProfile = () => {
         console.log("declarePriority")
     }
 
-    function getAdmin(){
-        if (role !== 2){
-            return <AdminProfile/>;
-        }
-    }
-
     return (
         <div className={"student_profile"}>
             <div className={"student_buttons"}>
@@ -41,12 +35,7 @@ const StudentProfile = () => {
                 </ModalNote>
             </div>
             <div className={"student_widgets"}>
-                <Widget>
-                    <p>My Goals</p>
-                </Widget>
-                <Widget>
-                    <p>My Progress</p>
-                </Widget>
+
             </div>
 
         </div>

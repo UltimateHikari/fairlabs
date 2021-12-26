@@ -7,10 +7,13 @@ import {AuthContext} from "../context";
 import Landing from "../pages/Landing";
 import Error from "../pages/Error";
 import CoursesList from "../pages/CoursesList";
-import CreateCourse from "../pages/CreateCourse";
+import CourseCreate from "../pages/CourseCreate";
 import PrivateRoute from "./PrivateRoute";
 import Security from "../pages/Security";
 import MyCourses from "../pages/MyCourses";
+import PublicRoute from "./PublicRoute";
+import Course from "../pages/Course";
+import CourseEdit from "../pages/CourseEdit";
 
 
 const AppRouter = () => {
@@ -18,9 +21,11 @@ const AppRouter = () => {
     return (
         <Routes>
             <Route path="/about" element={<About/>}/>
-            <Route path="/login" element={<Login/>}/>
             <Route path="/landing" element={<Landing/>}/>
 
+            <Route element={<PublicRoute/>}>
+                <Route path="/login" element={<Login/>}/>
+            </Route>
 
             <Route element={<PrivateRoute role={1}/>}>
                 <Route path="/profile" element={<Profile/>}/>
@@ -28,11 +33,14 @@ const AppRouter = () => {
             <Route element={<PrivateRoute role={1}/>}>
                 <Route exact path="/courses" element={<MyCourses/>}/>/>
             </Route>
-            {/*<Route element={<PrivateRoute role={1}/>}>*/}
-            {/*    <Route exact path="/courses/:id" element={<MyCourses/>}/>/>*/}
-            {/*</Route>*/}
+            <Route element={<PrivateRoute role={1}/>}>
+                <Route exact path="/courses/:id" element={<Course/>}/>/>
+            </Route>
             <Route element={<PrivateRoute role={2}/>}>
-                <Route path="/c_create" element={<CreateCourse/>}/>
+                <Route path="/create_course" element={<CourseCreate/>}/>
+            </Route>
+            <Route element={<PrivateRoute role={2}/>}>
+                <Route path="/edit_course" element={<CourseEdit/>}/>
             </Route>
             <Route element={<PrivateRoute role={2}/>}>
                 <Route path="/courses_list" element={<CoursesList/>}/>/>
