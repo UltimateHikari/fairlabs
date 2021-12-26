@@ -175,6 +175,100 @@
 			"response": []
 		},
 		{
+			"name": "v1/misc/get/goal",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\"  : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/get/goal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"get",
+						"goal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/misc/goal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 2,\n    \"mark\" : 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/goal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"goal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/misc/priority",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 2,\n    \"priority\" : false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/priority",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"priority"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "v1/tasks/queue",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true

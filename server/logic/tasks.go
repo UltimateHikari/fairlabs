@@ -19,7 +19,6 @@ func MyCoursesGetService(context *spec.Context) ([]*spec.Course, error) {
 		return nil, errors.New("Bad context: no email")
 	}
 	courses, err := db.GetInstance().GetMyCourses(context.Email)
-	log.Info(courses)
 	return courses, err
 }
 

@@ -47,7 +47,7 @@ CREATE TABLE participants(
     course_id integer REFERENCES courses (course_id),
     user_id integer REFERENCES users (user_id),
     user_role text,
-    user_goal integer,
+    user_goal integer DEFAULT(5),
     user_priority boolean DEFAULT(FALSE),
     PRIMARY KEY(course_id, user_id)
 );

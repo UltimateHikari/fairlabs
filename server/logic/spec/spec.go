@@ -52,7 +52,11 @@ type ConditionProgress struct {
 }
 
 type Goal struct {
-	Mark int
+	Mark int `db:"user_goal"`
+}
+
+type Priority struct {
+	Priority bool `db:"user_priority"`
 }
 
 type Course struct {
