@@ -10,9 +10,9 @@ import {AuthContext} from "./context";
 import Navbar from "./ui/navbar/Navbar";
 
 // roles
-// 1 == admin
-// 2 == student
-// 3 == teacher
+// 1 == student
+// 2 == teacher
+// 3 == admin
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
         const response = await Comm.getSth()
         console.log(response)
     }
-
+//добавить в конеткст емейл сетЕмейл?
     return (
 
         <AuthContext.Provider value={{

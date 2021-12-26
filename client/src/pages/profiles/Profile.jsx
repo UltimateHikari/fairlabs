@@ -15,12 +15,12 @@ const Profile = () => {
     const {role, setRole} = useContext(AuthContext);
 
     function getRoleProfile(){
-        if (role === 1) {
-            return <AdminProfile/>;
+        if (role === 3) {
+            return <div><StudentProfile/> <AdminProfile/></div>;
         } else if (role === 2) {
-            return <StudentProfile/>;
-        } else if (role === 3) {
-            return <TeacherProfile/>;
+            return <div><TeacherProfile/> <AdminProfile/></div>;
+        } else if (role === 1) {
+            return <div><StudentProfile/></div>;
         } else {
 
         }

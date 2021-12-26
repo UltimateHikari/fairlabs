@@ -5,6 +5,11 @@ import MyButton from "../ui/button/MyButton";
 //add group
 //add teacher(?)
 
+
+//переход на CourseEdit после указания названия (группы/препода?)
+//ConditionForm
+//форма выбора алгоритма
+//кнопка подтвердить
 const CreateCourse = () => {
 
     function setTasks(){

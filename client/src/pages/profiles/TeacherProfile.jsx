@@ -1,5 +1,8 @@
 import React from 'react';
 
+
+//delete finished
+//
 const TeacherProfile = () => {
     return (
         <h1>

@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 
+
+//поле для ввода почты
+//студент/учитель?
 const Login = () => {
 
     const[text, setText] = useState("Please log in")
