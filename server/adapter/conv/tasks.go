@@ -22,6 +22,31 @@ type TasksFollowRequest struct {
 	TasksCourse
 }
 
+type CourseListResponse struct {
+	Courses []TasksCourse `json:"courses"`
+}
+
+type Tasks struct {
+	Intent    string `json:"intent"`
+	TasksList []int  `json:"tasks"`
+}
+
+type TasksRequest struct {
+	UserContext
+	Tasks
+}
+
+type TasksListResponse struct {
+	Tasks []int `json:"tasks"`
+}
+
+func (r *TasksRequest) ToTasks() (*spec.Context, *spec.Tasks) {
+	var tasks spec.Tasks
+	tasks.Intent = r.Intent
+	tasks.Tasks = r.TasksList
+	return r.ToContext(), &tasks
+}
+
 func (r *TasksFollowRequest) ToCourse() (*spec.Context, *spec.Course) {
 	var course spec.Course
 	course.Id = r.Id
@@ -30,14 +55,24 @@ func (r *TasksFollowRequest) ToCourse() (*spec.Context, *spec.Course) {
 	return r.ToContext(), &course
 }
 
-func ToCourses(courses []spec.Course) []TasksCourse {
-	res := make([]TasksCourse, len(courses))
-	for i, item := range courses {
-		res[i].Id = item.Id
-		res[i].Name = item.Name
-		res[i].CourseGroup = item.Group
+func ToTasks(tasks *spec.Tasks) *TasksListResponse {
+	var response TasksListResponse
+	response.Tasks = make([]int, len(tasks.Tasks))
+	for i, item := range tasks.Tasks {
+		response.Tasks[i] = item
 	}
-	return res
+	return &response
+}
+
+func ToCourses(courses []*spec.Course) *CourseListResponse {
+	var response CourseListResponse
+	response.Courses = make([]TasksCourse, len(courses))
+	for i, item := range courses {
+		response.Courses[i].Id = item.Id
+		response.Courses[i].Name = item.Name
+		response.Courses[i].CourseGroup = item.Group
+	}
+	return &response
 }
 
 func ToQueue(queue *spec.Queue) *TasksQueue {

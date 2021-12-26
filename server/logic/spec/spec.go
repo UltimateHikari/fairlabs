@@ -2,9 +2,9 @@ package spec
 
 //Admin's
 type CourseInfo struct {
-	Name  string `db:"course_name"`
-	Group int    `db:"university_group"`
-	//TODO:extend
+	Name   string `db:"course_name"`
+	Group  int    `db:"university_group"`
+	Amount int    `db:"tasks_amount"`
 }
 
 type Algo struct {
@@ -56,17 +56,22 @@ type Goal struct {
 }
 
 type Course struct {
-	Id    int
-	Name  string
-	Group int
+	Id    int    `db:"course_id"`
+	Name  string `db:"course_name"`
+	Group int    `db:"university_group"`
 }
 
 //tasks
 type QueueEntry struct {
-	Name          string
-	IsPrioritized bool
+	Name          string `db:"user_name"`
+	IsPrioritized bool   `db:"user_priority"`
 }
 
 type Queue struct {
 	Queue []QueueEntry
+}
+
+type Tasks struct {
+	Intent string `json:"intent"`
+	Tasks  []int
 }

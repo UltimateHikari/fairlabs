@@ -4,8 +4,9 @@ import "fairlabs-server/logic/spec"
 
 type AdminAddRequest struct {
 	UserContext
-	Name  string `json:"name"`
-	Group int    `json:"group"`
+	Name   string `json:"name"`
+	Group  int    `json:"group"`
+	Amount int    `json:"amount"`
 }
 
 type AdminAlgo struct {
@@ -33,6 +34,7 @@ func (r *AdminAddRequest) ToCourseInfo() (*spec.Context, *spec.CourseInfo) {
 	var courseInfo spec.CourseInfo
 	courseInfo.Group = r.Group
 	courseInfo.Name = r.Name
+	courseInfo.Amount = r.Amount
 	return r.ToContext(), &courseInfo
 }
 
