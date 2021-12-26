@@ -28,12 +28,22 @@ var FollowKind = api.Kind{
 	Action:   api.Post,
 	Endpoint: "/follow",
 	Group:    TasksGroup}
+var SubmitKind = api.Kind{
+	Action:   api.Post,
+	Endpoint: "/submit",
+	Group:    TasksGroup}
+var QueryKind = api.Kind{
+	Action:   api.Get,
+	Endpoint: "/query",
+	Group:    TasksGroup}
 
 //Tasks
 type QueueController struct{}
 type MyCoursesGetController struct{}
 type AllCoursesGetController struct{}
 type FollowController struct{}
+type SubmitController struct{}
+type QueryController struct{}
 
 func (k QueueController) Handle(c echo.Context) error {
 	contextRequest := new(conv.UserContext)
@@ -97,4 +107,38 @@ func (k FollowController) Handle(c echo.Context) error {
 	}
 
 	return c.NoContent(http.StatusOK)
+}
+
+func (k SubmitController) Handle(c echo.Context) error {
+	tasksRequest := new(conv.TasksRequest)
+
+	if err := c.Bind(tasksRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	context, tasks := tasksRequest.ToTasks()
+
+	if err := logic.SubmitService(context, tasks); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.NoContent(http.StatusOK)
+}
+
+func (k QueryController) Handle(c echo.Context) error {
+	tasksRequest := new(conv.TasksRequest)
+
+	if err := c.Bind(tasksRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Bind error")
+	}
+
+	context, tasks := tasksRequest.ToTasks()
+
+	tasks, err := logic.QueryService(context, tasks)
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Service error")
+	}
+
+	return c.JSON(http.StatusOK, conv.ToTasks(tasks))
 }

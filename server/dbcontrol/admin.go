@@ -12,7 +12,7 @@ const (
 	is_admin_query       = "SELECT COUNT(*) FROM users WHERE users.email = $1 AND users.is_admin = TRUE;"
 	get_algo_query       = `SELECT * FROM algos;`
 	get_cond_query       = `SELECT * FROM conds;`
-	create_query         = "INSERT INTO courses(course_name, university_group) VALUES($1,$2);"
+	create_query         = "INSERT INTO courses(course_name, university_group, tasks_amount) VALUES($1,$2,$3);"
 	create_get_tag_query = "SELECT course_id FROM courses WHERE course_name = $1 AND university_group = $2;" //todo really needed?
 	save_algo_query      = "UPDATE courses SET algo = $1 WHERE course_id = $2;"
 	save_cond_query      = "UPDATE courses SET cond_id = $1, cond_data = $2 WHERE course_id = $3;"
@@ -60,7 +60,8 @@ func (c *DBControl) CreateCourse(cinfo *spec.CourseInfo) (int, error) {
 		context.Background(),
 		create_query,
 		cinfo.Name,
-		cinfo.Group); err != nil {
+		cinfo.Group,
+		cinfo.Amount); err != nil {
 		log.Error(err)
 		return count, err
 	}
