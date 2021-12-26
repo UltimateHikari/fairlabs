@@ -42,6 +42,8 @@ func registerAll(e *echo.Echo) {
 	api.RegisterPath(e, adr.MyCoursesGetKind, adr.MyCoursesGetController{})
 	api.RegisterPath(e, adr.AllCoursesGetKind, adr.AllCoursesGetController{})
 	api.RegisterPath(e, adr.FollowKind, adr.FollowController{})
+	api.RegisterPath(e, adr.SubmitKind, adr.SubmitController{})
+	api.RegisterPath(e, adr.QueryKind, adr.QueryController{})
 }
 
 func main() {

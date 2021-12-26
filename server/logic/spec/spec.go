@@ -2,9 +2,9 @@ package spec
 
 //Admin's
 type CourseInfo struct {
-	Name  string `db:"course_name"`
-	Group int    `db:"university_group"`
-	//TODO:extend
+	Name   string `db:"course_name"`
+	Group  int    `db:"university_group"`
+	Amount int    `db:"tasks_amount"`
 }
 
 type Algo struct {
@@ -69,4 +69,9 @@ type QueueEntry struct {
 
 type Queue struct {
 	Queue []QueueEntry
+}
+
+type Tasks struct {
+	Intent string `json:"intent"`
+	Tasks  []int
 }

@@ -26,10 +26,11 @@ CREATE TABLE courses(
     course_id SERIAL UNIQUE,
     course_name text,
     university_group integer,
+    tasks_amount integer NOT NULL, 
     algo integer REFERENCES algos (algo_id),
     cond_id integer REFERENCES conds (cond_id),
     cond_data text[],
-    queue integer[] NOT NULL, 
+    queue integer[] DEFAULT('{}'), 
     PRIMARY KEY (course_id, course_name, university_group)
 );
 
@@ -82,10 +83,10 @@ INSERT INTO users (email, user_name, group_number)
 INSERT INTO users (email, user_name, group_number)
     VALUES ('test@g.nsu.ru', 'test', 19212);
 
-INSERT INTO courses(course_name, university_group, queue)
-    VALUES ('WackoCourse', 19201,'{1,2}');
-INSERT INTO courses(course_name, university_group, queue)
-    VALUES ('OkcawCourse', 19212, '{3}');
+INSERT INTO courses(course_name, university_group, tasks_amount, queue)
+    VALUES ('WackoCourse', 19201, 33, '{1,2}');
+INSERT INTO courses(course_name, university_group, tasks_amount, queue)
+    VALUES ('OkcawCourse', 19212, 14, '{3}');
 
 INSERT INTO participants (course_id, user_id, user_role)
     VALUES (1, 1, 'STUDENT');

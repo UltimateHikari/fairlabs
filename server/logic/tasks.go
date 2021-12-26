@@ -38,3 +38,11 @@ func FollowService(context *spec.Context, course *spec.Course) error {
 	}
 	return db.GetInstance().Follow(context.Email, course.Id)
 }
+
+func SubmitService(context *spec.Context, tasks *spec.Tasks) error {
+	return nil
+}
+
+func QueryService(context *spec.Context, query *spec.Tasks) (*spec.Tasks, error) {
+	return &spec.Tasks{Intent: query.Intent, Tasks: []int{1, 2, 3, 4, 5}}, nil
+}

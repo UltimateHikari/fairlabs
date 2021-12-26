@@ -29,7 +29,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"a.rudometov@g.nsu.ru\",\n    \"username\": \"Andrey\",\n    \"name\": \"course\",\n    \"group\": 19202\n}",
+					"raw": "{\n    \"email\": \"a.rudometov@g.nsu.ru\",\n    \"username\": \"Andrey\",\n    \"name\": \"course\",\n    \"group\": 19202,\n    \"amount\": 10\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -235,6 +235,69 @@
 						"v1",
 						"tasks",
 						"allcourses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/tasks/submit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"a.udometov@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"intent\" : \"PLANNED\",\n    \"tasks\" : [1,2,3,4,5]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/submit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"submit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/tasks/query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"a.udometov@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"intent\" : \"EMPTY\",\n    \"tasks\" : []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"query"
 					]
 				}
 			},
