@@ -2,7 +2,7 @@ version: "2.2"
 services:
   back:
     build: ./server
-    image: server:0.2
+    image: server:0.4
     restart: always
     environment:
       - DATABASE_URL=postgres://fairlabs:fairlabs@db:5432/fairlabs
