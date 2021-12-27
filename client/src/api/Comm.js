@@ -6,16 +6,18 @@ const server_url = 'http://localhost:3000'
 // TODO objects.assign(context, message.load)
 const Comm = {
         get: async (context, message) => {
-            console.log(Object.assign(context, message.load))
+            console.log(Object.assign(message.load, context))
             return await axios.get(server_url + message.kind, {params: Object.assign(context, message.load)})
             .catch(error => console.log(error))
         },
         post: async (context, message) => {
-            console.log(JSON.stringify(Object.assign(context, message.load)))
+            console.log(message.load);
+            console.log(context);
             return await axios({
                 method: 'post',
                 url: server_url + message.kind,
-                data: JSON.stringify(Object.assign(context, message.load))
+                params: context,
+                data: message.load
             }).catch(error => console.log(error))
         }
 }
