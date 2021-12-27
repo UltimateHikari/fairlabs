@@ -1,16 +1,17 @@
 import React, {useContext} from 'react';
 import {useNavigate} from "react-router-dom";
+import { TeacherRole } from 'roles';
 import {AuthContext} from "../context";
 import MyButton from "../ui/button/MyButton";
 
 const CourseItem = (props) => {
 
     const navigate = useNavigate()
-    const {role, setRole} = useContext(AuthContext);
+    const {fContext} = useContext(AuthContext);
 
     function getButtons({}) {
         let id = props.course.id
-        if (role >= 2) {
+        if (fContext.role == TeacherRole) {
             return (
                 <div>
                     <MyButton onClick={() => navigate('/courses/' + id.toString())}>

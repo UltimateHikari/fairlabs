@@ -14,6 +14,7 @@ import MyCourses from "../pages/MyCourses";
 import PublicRoute from "./PublicRoute";
 import Course from "../pages/Course";
 import CourseEdit from "../pages/CourseEdit";
+import { StudentRole, TeacherRole } from 'roles';
 
 
 const AppRouter = () => {
@@ -27,22 +28,22 @@ const AppRouter = () => {
                 <Route path="/login" element={<Login/>}/>
             </Route>
 
-            <Route element={<PrivateRoute role={1}/>}>
+            <Route element={<PrivateRoute role={StudentRole}/>}>
                 <Route path="/profile" element={<Profile/>}/>
             </Route>
-            <Route element={<PrivateRoute role={1}/>}>
+            <Route element={<PrivateRoute role={StudentRole}/>}>
                 <Route exact path="/courses" element={<MyCourses/>}/>
             </Route>
-            <Route element={<PrivateRoute role={1}/>}>
+            <Route element={<PrivateRoute role={StudentRole}/>}>
                 <Route exact path="/courses/:id" element={<Course/>}/>
             </Route>
-            <Route element={<PrivateRoute role={2}/>}>
+            <Route element={<PrivateRoute role={TeacherRole}/>}>
                 <Route path="/create_course" element={<CourseCreate/>}/>
             </Route>
-            <Route element={<PrivateRoute role={2}/>}>
+            <Route element={<PrivateRoute role={TeacherRole}/>}>
                 <Route path="/edit_course" element={<CourseEdit/>}/>
             </Route>
-            <Route element={<PrivateRoute role={2}/>}>
+            <Route element={<PrivateRoute role={TeacherRole}/>}>
                 <Route path="/courses_list" element={<CoursesList/>}/>
             </Route>
 

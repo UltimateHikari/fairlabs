@@ -1,4 +1,5 @@
 import axios from "axios";
+import { UnAuthRole } from "roles";
 
 const server_url = 'http://localhost:3000'
 
@@ -23,17 +24,12 @@ const Comm = {
         }
 }
 
-// roles
-// 1 == student
-// 2 == teacher
-// 3 == admin
-
 const FContext = {
     email: 'no email',
     username: 'no username',
     group: -1,
     course: -1,
-    role: -1
+    role: UnAuthRole
 }
 
 //Todo MessageKind, MessageLoad as interfaces in Typescript

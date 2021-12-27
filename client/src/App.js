@@ -1,6 +1,6 @@
 
-import {BrowserRouter, Route, Routes, Redirect} from "react-router-dom";
-import { Comm, FContext } from "./api/Comm";
+import { BrowserRouter } from "react-router-dom";
+import { FContext } from "./api/Comm";
 import './styles/App.css';
 import AppRouter from "./router/AppRouter";
 import {useEffect, useState} from "react";
@@ -8,10 +8,6 @@ import {AuthContext} from "./context";
 import Navbar from "./ui/navbar/Navbar";
 import { useCookies } from 'react-cookie';
 
-// roles
-// 1 == student
-// 2 == teacher
-// 3 == admin
 
 function App() {
 
@@ -19,17 +15,20 @@ function App() {
     const [fContext, setFContext] = useState(FContext);
     const [cookies, setCookie] = useCookies(['faircookie']);
 
-    const setPerson = (email) => {
+    const setPerson = (email, role) => {
         let newFContext = fContext
         newFContext.email = email
-        console.log(email);
+        newFContext.role = role
+        console.log(email + role);
         setFContext(newFContext)
+        setCookie('context', newFContext, {})
     }
 
     const setCourse = (course_id) => {
         let newFContext = fContext
         newFContext.course = course_id
         setFContext(newFContext)
+        setCookie('context', newFContext, {})
     }
 
     useEffect( () => {
