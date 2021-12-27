@@ -5,56 +5,26 @@ import {AuthContext} from "../../context";
 import ModalNote from "../../components/ModalNote";
 import Login from "../../pages/Login";
 import { useCookies } from 'react-cookie';
+import Navlist from './Navlist';
+import Navbutton from './Navbutton';
 
 
 const Navbar = () => {
 
-    const {isAuth, setIsAuth, setPerson} = useContext(AuthContext);
-
-    const [isModalActive, setModalActive] = useState(false)
-    const [cookies, setCookie, removeCookie] = useCookies(['faircookie']);
-
-
-    const navigate = useNavigate()
-
-    const logout = () => {
-        setIsAuth(false)
-        setPerson("")
-        setModalActive(false)
-        removeCookie('auth', {})
-        removeCookie('context', {})
-        navigate('/landing')
-    }
-
-    return (
-        isAuth ?
-            <div className='navbar'>
-                <MyButton onClick={logout}>
-                    Log out
-                </MyButton>
-                <div className="li">
-                    {/*мб сделать faq вместо about*/}
-                    <Link className="li a" to="/about">About</Link>
-                    <Link className="li a" to="/courses">Courses</Link>
-                    <Link className="li a" to="/profile">Profile</Link>
-                    <Link className="li a" to="/landing">Home</Link>
-                    <Link className="li a" to="/create_course">CCreate</Link>
-                </div>
+    return(
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <Navlist/>
+            <Navbutton/>
             </div>
-            :
-            <div className='navbar'>
-                <MyButton onClick={() => setModalActive(true)}>
-                    Log in
-                </MyButton>
-                <div className="li">
-                    <Link className="li a" to="/about">About</Link>
-                    <Link className="li a" to="/landing">Home</Link>
-                </div>
-                <ModalNote active={isModalActive} setActive={setModalActive}>
-                    <Login/>
-                </ModalNote>
-            </div>
-    );
+        </div>
+        </nav>
+    )
 };
 
 export default Navbar;

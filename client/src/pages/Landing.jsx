@@ -10,7 +10,7 @@ const Landing = () => {
             <h1 className={'h1'}>
                 Landing
             </h1>
-            <button onClick={() => Comm.get(fContext, AlgoGetMessage())}>
+            <button class="btn btn-primary" onClick={() => Comm.get(fContext, AlgoGetMessage())}>
                 AlgoGet
             </button>
         </div>

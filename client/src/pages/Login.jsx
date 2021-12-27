@@ -40,17 +40,26 @@ const Login = () => {
         <div className={'login'}>
             <form onSubmit={login}>
                 <h1 className={'h1'}>Please log in</h1>
-                <div>
-                    <label>Email address</label>
-                    <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter email"
-                    onChange={handleEmailChange}
-                    value={email}
+                <div class="mb-3">
+                    <label 
+                        for="loginEmail"
+                        class="form-label"
+                    >
+                        Email address
+                    </label>
+                    <input 
+                        type="email"
+                        class="form-control"
+                        id="loginEmail"
+                        aria-describedby="emailHelp"
+                        placeholder="example@g.nsu.ru"
+                        onChange={handleEmailChange}
                     />
+                    <div id="emailHelp" class="form-text">
+                        We'll never share your email with anyone else.
+                    </div>
                 </div>
-                <div class="form-check form-switch">
+                <div class="mb-3 form-check form-switch">
                     <input 
                         class="form-check-input"
                         type="checkbox"
@@ -62,7 +71,7 @@ const Login = () => {
                             Я преподаватель (trust me lol)
                     </label>
                 </div>
-                <button className="btn" type="submit">Log in</button>
+                <button className="btn btn-primary" type="submit">Log in</button>
             </form>
         </div>
     );
