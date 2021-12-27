@@ -26,7 +26,7 @@ const PriorityMessage = (priority) => {
         }
     }
 }
-const LookupGoalMessage = (goal) => {
+const GoalMessage = (goal) => {
     return {
         kind: '/v1/misc/goal',
         load: {
@@ -34,3 +34,5 @@ const LookupGoalMessage = (goal) => {
         }
     }
 }
+
+export {LookupGoalMessage, LookupStatsMessage, ProgressMessage, PriorityMessage, GoalMessage}

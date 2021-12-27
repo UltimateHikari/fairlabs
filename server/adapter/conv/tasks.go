@@ -33,7 +33,7 @@ type Tasks struct {
 
 type TasksRequest struct {
 	UserContext
-	Tasks
+	Intent string `query:"intent"`
 }
 
 type TasksListResponse struct {
@@ -43,7 +43,7 @@ type TasksListResponse struct {
 func (r *TasksRequest) ToTasks() (*spec.Context, *spec.Tasks) {
 	var tasks spec.Tasks
 	tasks.Intent = r.Intent
-	tasks.Tasks = r.TasksList
+	tasks.Tasks = []int32{}
 	return r.ToContext(), &tasks
 }
 

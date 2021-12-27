@@ -41,3 +41,5 @@ const QueryMessage = (intent) => {
         }
     }
 }
+
+export {QueueMessage, MyCoursesMessage, AllCoursesMessage, FollowMessage, SubmitMessage, QueryMessage}

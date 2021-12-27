@@ -6,21 +6,17 @@ const server_url = 'http://localhost:3000'
 // TODO objects.assign(context, message.load)
 const Comm = {
         get: async (context, message) => {
-            console.log(context)
-            await axios({
-                method: 'get',
-                url: server_url + message.kind,
-                body: JSON.stringify(Object.assign(context, message.load))
-            }).then(response => response.data)
+            console.log(Object.assign(context, message.load))
+            return await axios.get(server_url + message.kind, {params: Object.assign(context, message.load)})
             .catch(error => console.log(error))
         },
         post: async (context, message) => {
-            await axios({
+            console.log(JSON.stringify(Object.assign(context, message.load)))
+            return await axios({
                 method: 'post',
                 url: server_url + message.kind,
-                body: JSON.stringify(Object.assign(context, message.load))
-            }).then(response => console.log(response))
-            .catch(error => console.log(error))
+                data: JSON.stringify(Object.assign(context, message.load))
+            }).catch(error => console.log(error))
         }
 }
 

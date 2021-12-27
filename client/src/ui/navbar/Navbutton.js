@@ -1,8 +1,8 @@
 import React, {useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {AuthContext} from "../../context";
-import ModalNote from "../../components/ModalNote";
-import Login from "../../pages/Login";
+import {AuthContext} from "context";
+import ModalNote from "components/ModalNote";
+import Login from "pages/Login";
 import { useCookies } from 'react-cookie';
 
 
@@ -10,7 +10,7 @@ const Navbutton = () =>{
     const {isAuth, setIsAuth, setPerson, fContext} = useContext(AuthContext);
 
     const [isModalActive, setModalActive] = useState(false)
-    const {removeCookie} = useCookies(['faircookie']);
+    const [cookies, setCookie, removeCookie] = useCookies(['faircookie']);
 
 
     const navigate = useNavigate()
