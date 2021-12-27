@@ -1,26 +1,26 @@
 import axios from "axios";
 
-export default class Comm{
-    static async getAlgo(){
-        return (await axios.get('http://localhost:3000/v1/admin/get/algo')).data
-    }
+const server_url = 'http://localhost:3000'
 
-    static async getAllCourses(){
-
-    }
-
-    static async getMyCourses(){
-
-    }
-
-    static async getProgress(){
-
-    }
-
-    static async getGoals(){
-
-    }
-
-
-
+// TODO objects.assign(context, message.load)
+const Comm = {
+        get: async (message) => {
+            await axios({
+                method: 'get',
+                url: server_url + message.kind,
+                body: JSON.stringify(message.load)
+            }).then(response => response.data)
+            .catch(error => console.log(error))
+        },
+        post: async (message) => {
+            await axios({
+                method: 'post',
+                url: server_url + message.kind,
+                body: JSON.stringify(message.load)
+            }).then(response => console.log(response))
+            .catch(error => console.log(error))
+        }
 }
+
+//Todo MessageKind, MessageLoad as interfaces in Typescript
+export { Comm /*, MessageKind*/};

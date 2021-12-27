@@ -2,7 +2,7 @@
 import {BrowserRouter, Route, Routes, Redirect} from "react-router-dom";
 import About from "./pages/About";
 import axios from "axios";
-import Comm from "./api/Comm";
+import { Comm } from "./api/Comm";
 import './styles/App.css';
 import AppRouter from "./router/AppRouter";
 import {useEffect, useState} from "react";

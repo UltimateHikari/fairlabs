@@ -1,7 +1,6 @@
 import React from 'react';
 import CourseItem from "../components/CourseItem";
 
-
 //все курсы
 //для админов кнопка редактирования
 //для препода + кнопка фоллоу
