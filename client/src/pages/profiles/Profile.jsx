@@ -4,6 +4,7 @@ import MyButton from "../../ui/button/MyButton";
 import StudentProfile from "./StudentProfile";
 import TeacherProfile from "./TeacherProfile";
 import AdminProfile from "./AdminProfile";
+import { StudentRole, TeacherRole } from 'roles';
 
 /* тут должна быть вся фигня про чела
 *  + курсу
@@ -12,14 +13,12 @@ import AdminProfile from "./AdminProfile";
 
 const Profile = () => {
 
-    const {role, setRole} = useContext(AuthContext);
+    const {fContext} = useContext(AuthContext);
 
     function getRoleProfile(){
-        if (role === 3) {
-            return <div><StudentProfile/> <AdminProfile/></div>;
-        } else if (role === 2) {
+        if (fContext.role === TeacherRole) {
             return <div><TeacherProfile/> <AdminProfile/></div>;
-        } else if (role === 1) {
+        } else if (fContext.role === StudentRole) {
             return <div><StudentProfile/></div>;
         } else {
 

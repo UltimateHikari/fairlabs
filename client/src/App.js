@@ -1,45 +1,52 @@
 
-import {BrowserRouter, Route, Routes, Redirect} from "react-router-dom";
-import About from "./pages/About";
-import axios from "axios";
-import Comm from "./api/Comm";
+import { BrowserRouter } from "react-router-dom";
+import { FContext } from "./api/Comm";
 import './styles/App.css';
 import AppRouter from "./router/AppRouter";
 import {useEffect, useState} from "react";
 import {AuthContext} from "./context";
 import Navbar from "./ui/navbar/Navbar";
+import { useCookies } from 'react-cookie';
 
-// roles
-// 1 == student
-// 2 == teacher
-// 3 == admin
 
 function App() {
 
     const [isAuth, setIsAuth] = useState(false);
-    const [role, setRole] = useState(2);
-    const [group, setGroup] = useState(19201);
+    const [fContext, setFContext] = useState(FContext);
+    const [cookies, setCookie] = useCookies(['faircookie']);
+
+    const setPerson = (email, role) => {
+        let newFContext = fContext
+        newFContext.email = email
+        newFContext.role = role
+        console.log(email + role);
+        setFContext(newFContext)
+        setCookie('context', newFContext, {})
+    }
+
+    const setCourse = (course_id) => {
+        let newFContext = fContext
+        newFContext.course = course_id
+        setFContext(newFContext)
+        setCookie('context', newFContext, {})
+    }
 
     useEffect( () => {
-        if (localStorage.getItem('auth')){
-            setIsAuth(true)
+        if (typeof cookies.auth != undefined){
+            setIsAuth(cookies.auth)
+        }
+        if (typeof cookies.context != undefined){
+            setIsAuth(cookies.context)
         }
     }, [])
 
-    async function fetch(){
-        const response = await Comm.getSth()
-        console.log(response)
-    }
-//добавить в конеткст емейл сетЕмейл?
     return (
-
         <AuthContext.Provider value={{
             isAuth,
             setIsAuth,
-            role,
-            setRole,
-            group,
-            setGroup
+            fContext,
+            setPerson,
+            setCourse
         }}>
 
             <BrowserRouter>
@@ -48,9 +55,6 @@ function App() {
             </BrowserRouter>
 
         </AuthContext.Provider>
-        // <div>
-        //     <button onClick={fetch}>get</button>
-        // </div>
     );
 }
 

@@ -4,11 +4,11 @@ import {Navigate, Outlet, Route} from "react-router";
 
 export default function PrivateRoute(props){
 
-    const {isAuth, setIsAuth} = useContext(AuthContext);
-    const {role, setRole} = useContext(AuthContext);
+    const {isAuth} = useContext(AuthContext);
+    const {fContext} = useContext(AuthContext);
 
     function checkRole(){
-        return role >= props.role;
+        return fContext.role >= props.role;
     }
 
     return isAuth ? (
