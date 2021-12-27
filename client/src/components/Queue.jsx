@@ -1,10 +1,11 @@
-import React from 'react';
+import { AuthContext } from 'context';
+import React, { useContext } from 'react';
 
 const Queue = () => {
+    const {fContext} = useContext(AuthContext)
+
     return (
-        <div>
-            
-        </div>
+        <h1>Queue</h1>
     );
 };
 

@@ -7,14 +7,21 @@ import MyButton from "../ui/button/MyButton";
 const CourseItem = (props) => {
 
     const navigate = useNavigate()
-    const {fContext} = useContext(AuthContext);
+    const {fContext, setCourse} = useContext(AuthContext);
+
+    const inside = () => {
+        let id = props.course.id
+        console.log(id)
+        setCourse(id)
+        navigate('/courses/' + id.toString())
+    }
 
     function getButtons({}) {
-        let id = props.course.id
+        
         if (fContext.role == TeacherRole) {
             return (
                 <div>
-                    <MyButton onClick={() => navigate('/courses/' + id.toString())}>
+                    <MyButton onClick={inside}>
                         check
                     </MyButton>
                     <MyButton>
@@ -25,7 +32,7 @@ const CourseItem = (props) => {
         } else {
             return (
                 <div>
-                    <MyButton onClick={() => navigate('/courses/' + id.toString())}>
+                    <MyButton onClick={inside}>
                         check
                     </MyButton>
                 </div>
