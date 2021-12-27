@@ -81,6 +81,7 @@ func SubmitService(context *spec.Context, tasks *spec.Tasks) error {
 }
 
 func QueryService(context *spec.Context, query *spec.Tasks) (*spec.Tasks, error) {
+	// doin lil'
 	if err := VerifyEmail(context.Email); err != nil {
 		return nil, err
 	}
@@ -93,12 +94,7 @@ func QueryService(context *spec.Context, query *spec.Tasks) (*spec.Tasks, error)
 	var err error
 	var tasks *spec.Tasks
 	switch query.Intent {
-	case "PLANNED", "FINISHED":
-		tasks, err = db.GetInstance().QuerySubmitsWithStatus(
-			context.Email,
-			context.CourseId,
-			query)
-	case "EMPTY":
+	case "PLANNED", "FINISHED", "EMPTY":
 		tasks, err = db.GetInstance().QuerySubmitsWithStatus(
 			context.Email,
 			context.CourseId,

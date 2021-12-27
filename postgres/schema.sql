@@ -103,6 +103,10 @@ INSERT INTO submits(course_id, user_id, task_id, task_status)
     VALUES (2, 3, 3, 'PLANNED');
 INSERT INTO submits(course_id, user_id, task_id, task_status)
     VALUES (2, 3, 4, 'PLANNED');
+INSERT INTO submits(course_id, user_id, task_id, task_status)
+    VALUES (2, 3, 5, 'FINISHED');
+INSERT INTO submits(course_id, user_id, task_id, task_status)
+    VALUES (2, 3, 5, 'EMPTY');
 
 GRANT USAGE ON SCHEMA public TO fairlabs;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fairlabs;

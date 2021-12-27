@@ -21,15 +21,49 @@ const (
 	follow_query      = `INSERT INTO participants(user_id, course_id, $3) 
 	SELECT user_id, $2 as course_id FROM users WHERE email = $1;`
 	teacher_role = "TEACHER"
+
 	submit_query = `INSERT INTO submits(course_id, user_id, task_id, task_status)
 	SELECT $1 as course_id, (SELECT user_id FROM users WHERE email = $2),
-	unnest($3) as task_id, $4 as task_status;`
+	unnest($3::int[]) as task_id, $4 as task_status;`
+
 	query_query = `SELECT task_id FROM submits WHERE
 	course_id = $1 AND
 	user_id = (SELECT user_id FROM users WHERE email = $2) AND
 	task_status = $3
 	GROUP BY
 	task_id;`
+	amount_query = `SELECT tasks_amount FROM courses WHERE
+	course_id = $1;`
+	tasks_generator = `SELECT generate_series(1, (SELECT tasks_amount FROM courses WHERE
+	course_id = $1)) as task_id;`
+
+	finishable_query = `SELECT task_id FROM
+		(
+			SELECT generate_series(1, 
+			(SELECT tasks_amount FROM courses WHERE course_id = $1)) as task_id
+			EXCEPT 
+			SELECT task_id FROM submits WHERE
+			course_id = $1 AND
+			user_id = (SELECT user_id FROM users WHERE email = $2) AND
+			task_status = 'FINISHED'
+			GROUP BY task_id
+		) as sb
+		ORDER BY task_id;`
+	emptyable_query = `SELECT task_id FROM
+	(
+		SELECT task_id FROM submits WHERE
+		course_id = $1 AND
+		user_id = (SELECT user_id FROM users WHERE email = $2) AND
+		task_status = 'FINISHED'
+		GROUP BY task_id
+		EXCEPT 
+		SELECT task_id FROM submits WHERE
+		course_id = $1 AND
+		user_id = (SELECT user_id FROM users WHERE email = $2) AND
+		task_status = 'EMPTY'
+		GROUP BY task_id
+	) as sb
+	ORDER BY task_id;`
 )
 
 func (c *DBControl) GetQueue(course_id int) (*spec.Queue, error) {
@@ -93,7 +127,7 @@ func (c *DBControl) Follow(email string, id int) error {
 func (c *DBControl) Submit(email string, id int, tasks *spec.Tasks) error {
 	var err error
 	ctx := context.Background()
-	log.Info(tasks.Tasks)
+
 	if _, err = c.pool.Exec(
 		ctx,
 		submit_query,
@@ -111,15 +145,26 @@ func (c *DBControl) QuerySubmitsWithStatus(email string, id int, tasks *spec.Tas
 	var err error
 	ctx := context.Background()
 	res.Intent = tasks.Intent
-	if err := pgxscan.Select(
-		ctx,
-		c.pool,
-		&(res.Tasks),
-		query_query,
-		id,
-		email,
-		tasks.Intent); err != nil {
-		log.Error(err)
+	if res.Intent == "EMPTY" {
+		if err := pgxscan.Select(
+			ctx,
+			c.pool,
+			&(res.Tasks),
+			emptyable_query,
+			id,
+			email); err != nil {
+			log.Error(err)
+		}
+	} else {
+		if err := pgxscan.Select(
+			ctx,
+			c.pool,
+			&(res.Tasks),
+			finishable_query,
+			id,
+			email); err != nil {
+			log.Error(err)
+		}
 	}
 	return &res, err
 }

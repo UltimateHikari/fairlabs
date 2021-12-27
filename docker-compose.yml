@@ -2,7 +2,7 @@ version: "2.2"
 services:
   back:
     build: ./server
-    image: server:0.7
+    image: server:0.8
     restart: always
     environment:
       - DATABASE_URL=postgres://fairlabs:fairlabs@db:5432/fairlabs
@@ -14,6 +14,7 @@ services:
     image: postgres:13.4
     ports: ["5440:5432"]
     networks: ["fairnet"]
+    command: ["postgres", "-c", "log_statement=all"]
     volumes:
       - ./postgres/schema.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
