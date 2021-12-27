@@ -47,13 +47,13 @@ CREATE TABLE participants(
     course_id integer REFERENCES courses (course_id),
     user_id integer REFERENCES users (user_id),
     user_role text,
-    user_goal integer,
+    user_goal integer DEFAULT(5),
     user_priority boolean DEFAULT(FALSE),
     PRIMARY KEY(course_id, user_id)
 );
 
 --mb a limit on task_id?
---status == PLANNED/DONE/CLEARED
+--status == PLANNED/FINISHED/CLEARED
 CREATE TABLE submits(
     submit_id SERIAL PRIMARY KEY,
     course_id integer REFERENCES courses (course_id),
@@ -94,6 +94,19 @@ INSERT INTO participants (course_id, user_id, user_role)
     VALUES (1, 2, 'STUDENT');
 INSERT INTO participants (course_id, user_id, user_role, user_priority)
     VALUES (2, 3, 'STUDENT', TRUE);
+
+INSERT INTO submits(course_id, user_id, task_id, task_status)
+    VALUES (2, 3, 1, 'FINISHED');
+INSERT INTO submits(course_id, user_id, task_id, task_status)
+    VALUES (2, 3, 2, 'FINISHED');
+INSERT INTO submits(course_id, user_id, task_id, task_status)
+    VALUES (2, 3, 3, 'PLANNED');
+INSERT INTO submits(course_id, user_id, task_id, task_status)
+    VALUES (2, 3, 4, 'PLANNED');
+INSERT INTO submits(course_id, user_id, task_id, task_status)
+    VALUES (2, 3, 5, 'FINISHED');
+INSERT INTO submits(course_id, user_id, task_id, task_status)
+    VALUES (2, 3, 5, 'EMPTY');
 
 GRANT USAGE ON SCHEMA public TO fairlabs;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fairlabs;

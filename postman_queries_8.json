@@ -175,6 +175,100 @@
 			"response": []
 		},
 		{
+			"name": "v1/misc/get/goal",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\"  : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/get/goal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"get",
+						"goal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/misc/goal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 2,\n    \"mark\" : 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/goal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"goal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/misc/priority",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 2,\n    \"priority\" : false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/priority",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"priority"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "v1/tasks/queue",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -184,7 +278,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 1\n}",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 2\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -217,7 +311,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"a.udometov@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212\n}",
+					"raw": "{\n    \"email\" : \"a.rudometov@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -247,7 +341,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"a.udometov@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"intent\" : \"PLANNED\",\n    \"tasks\" : [1,2,3,4,5]\n}",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"intent\" : \"FINISHED\",\n    \"course\" : 2,\n    \"tasks\" : [9,10]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -271,7 +365,7 @@
 			"response": []
 		},
 		{
-			"name": "v1/tasks/query",
+			"name": "v1/tasks/query-plannable",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -280,7 +374,73 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"a.udometov@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"intent\" : \"EMPTY\",\n    \"tasks\" : []\n}",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"intent\" : \"PLANNED\",\n    \"course\" : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/tasks/query-finishable",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"intent\" : \"FINISHED\",\n    \"course\" : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/tasks/query-deletable",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"intent\" : \"EMPTY\",\n    \"course\" : 2\n}",
 					"options": {
 						"raw": {
 							"language": "json"

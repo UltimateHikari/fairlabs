@@ -11,9 +11,8 @@ import (
 )
 
 func checkPrivilieges(context *spec.Context) error {
-	if context.Email == "" {
-		//TODO look closely
-		return errors.New("Bad context: no email")
+	if err := VerifyEmail(context.Email); err != nil {
+		return err
 	}
 	if !db.GetInstance().IsAdmin(context.Email) {
 		return errors.New(context.Email + " does't have privilieges")
@@ -54,8 +53,11 @@ func AlgoPostService(context *spec.Context, algo *spec.Algo) error {
 		log.Error(err)
 		return err
 	}
-	if context.CourseId < 0 || algo.Id < 0 {
-		return errors.New("Insuffitient information:" + fmt.Sprint(context.CourseId) + fmt.Sprint(algo.Id))
+	if err := VerifyCourse(context.CourseId); err != nil {
+		return err
+	}
+	if algo.Id < 0 {
+		return errors.New("Insuffitient information:" + fmt.Sprint(algo.Id))
 	}
 	err := db.GetInstance().SaveAlgo(context.CourseId, algo.Id)
 	return err
@@ -65,6 +67,12 @@ func ConditionPostService(context *spec.Context, cond *spec.Condition) error {
 	if err := checkPrivilieges(context); err != nil {
 		log.Error(err)
 		return err
+	}
+	if err := VerifyCourse(context.CourseId); err != nil {
+		return err
+	}
+	if cond.Id < 0 {
+		return errors.New("Insuffitient information:" + fmt.Sprint(cond.Id))
 	}
 	err := db.GetInstance().SaveCondition(context.CourseId, cond)
 	return err

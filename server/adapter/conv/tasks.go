@@ -27,8 +27,8 @@ type CourseListResponse struct {
 }
 
 type Tasks struct {
-	Intent    string `json:"intent"`
-	TasksList []int  `json:"tasks"`
+	Intent    string  `json:"intent"`
+	TasksList []int32 `json:"tasks"`
 }
 
 type TasksRequest struct {
@@ -37,7 +37,7 @@ type TasksRequest struct {
 }
 
 type TasksListResponse struct {
-	Tasks []int `json:"tasks"`
+	Tasks []int32 `json:"tasks"`
 }
 
 func (r *TasksRequest) ToTasks() (*spec.Context, *spec.Tasks) {
@@ -57,7 +57,7 @@ func (r *TasksFollowRequest) ToCourse() (*spec.Context, *spec.Course) {
 
 func ToTasks(tasks *spec.Tasks) *TasksListResponse {
 	var response TasksListResponse
-	response.Tasks = make([]int, len(tasks.Tasks))
+	response.Tasks = make([]int32, len(tasks.Tasks))
 	for i, item := range tasks.Tasks {
 		response.Tasks[i] = item
 	}

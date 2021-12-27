@@ -52,7 +52,11 @@ type ConditionProgress struct {
 }
 
 type Goal struct {
-	Mark int
+	Mark int `db:"user_goal"`
+}
+
+type Priority struct {
+	Priority bool `db:"user_priority"`
 }
 
 type Course struct {
@@ -72,6 +76,6 @@ type Queue struct {
 }
 
 type Tasks struct {
-	Intent string `json:"intent"`
-	Tasks  []int
+	Intent string
+	Tasks  []int32 `db:"task_id"`
 }
