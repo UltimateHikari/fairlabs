@@ -31,10 +31,10 @@ const AppRouter = () => {
                 <Route path="/profile" element={<Profile/>}/>
             </Route>
             <Route element={<PrivateRoute role={1}/>}>
-                <Route exact path="/courses" element={<MyCourses/>}/>/>
+                <Route exact path="/courses" element={<MyCourses/>}/>
             </Route>
             <Route element={<PrivateRoute role={1}/>}>
-                <Route exact path="/courses/:id" element={<Course/>}/>/>
+                <Route exact path="/courses/:id" element={<Course/>}/>
             </Route>
             <Route element={<PrivateRoute role={2}/>}>
                 <Route path="/create_course" element={<CourseCreate/>}/>
@@ -43,7 +43,7 @@ const AppRouter = () => {
                 <Route path="/edit_course" element={<CourseEdit/>}/>
             </Route>
             <Route element={<PrivateRoute role={2}/>}>
-                <Route path="/courses_list" element={<CoursesList/>}/>/>
+                <Route path="/courses_list" element={<CoursesList/>}/>
             </Route>
 
 

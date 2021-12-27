@@ -1,8 +1,6 @@
 
 import {BrowserRouter, Route, Routes, Redirect} from "react-router-dom";
-import About from "./pages/About";
-import axios from "axios";
-import { Comm } from "./api/Comm";
+import { Comm, FContext } from "./api/Comm";
 import './styles/App.css';
 import AppRouter from "./router/AppRouter";
 import {useEffect, useState} from "react";
@@ -17,8 +15,20 @@ import Navbar from "./ui/navbar/Navbar";
 function App() {
 
     const [isAuth, setIsAuth] = useState(false);
-    const [role, setRole] = useState(2);
-    const [group, setGroup] = useState(19201);
+    const [fContext, setFContext] = useState(FContext);
+
+    const setPerson = (email) => {
+        let newFContext = fContext
+        newFContext.email = email
+        console.log(email);
+        setFContext(newFContext)
+    }
+
+    const setCourse = (course_id) => {
+        let newFContext = fContext
+        newFContext.course = course_id
+        setFContext(newFContext)
+    }
 
     useEffect( () => {
         if (localStorage.getItem('auth')){
@@ -26,20 +36,13 @@ function App() {
         }
     }, [])
 
-    async function fetch(){
-        const response = await Comm.getSth()
-        console.log(response)
-    }
-//добавить в конеткст емейл сетЕмейл?
     return (
-
         <AuthContext.Provider value={{
             isAuth,
             setIsAuth,
-            role,
-            setRole,
-            group,
-            setGroup
+            fContext,
+            setPerson,
+            setCourse
         }}>
 
             <BrowserRouter>
@@ -48,9 +51,6 @@ function App() {
             </BrowserRouter>
 
         </AuthContext.Provider>
-        // <div>
-        //     <button onClick={fetch}>get</button>
-        // </div>
     );
 }
 
