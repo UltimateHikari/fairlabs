@@ -8,8 +8,12 @@ const Submits = () => {
     return(
         <div>
         <h1> Submits </h1>
-        <SubmitForm/>
-        <PlannedForm/>
+        <div class="container">
+            <div class="row">
+                <div class="col-6"><SubmitForm/></div>
+                <div class="col-6"><PlannedForm/></div>
+            </div>
+        </div>
         </div>
     )
 };

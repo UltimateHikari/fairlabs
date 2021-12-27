@@ -36,6 +36,11 @@ type TasksRequest struct {
 	Intent string `query:"intent"`
 }
 
+type TaskSubmitRequest struct {
+	UserContext
+	Tasks
+}
+
 type TasksListResponse struct {
 	Tasks []int32 `json:"tasks"`
 }
