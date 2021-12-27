@@ -4,19 +4,25 @@ import MyButton from "../button/MyButton";
 import {AuthContext} from "../../context";
 import ModalNote from "../../components/ModalNote";
 import Login from "../../pages/Login";
+import { useCookies } from 'react-cookie';
+
 
 const Navbar = () => {
 
-    const {isAuth, setIsAuth} = useContext(AuthContext);
+    const {isAuth, setIsAuth, setPerson} = useContext(AuthContext);
 
     const [isModalActive, setModalActive] = useState(false)
+    const [cookies, setCookie, removeCookie] = useCookies(['faircookie']);
+
 
     const navigate = useNavigate()
 
     const logout = () => {
-        setIsAuth(false);
+        setIsAuth(false)
+        setPerson("")
         setModalActive(false)
-        localStorage.removeItem('auth')
+        removeCookie('auth', {})
+        removeCookie('context', {})
         navigate('/landing')
     }
 

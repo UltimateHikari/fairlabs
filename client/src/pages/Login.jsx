@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
-import MyButton from "../ui/button/MyButton";
-import MyInput from "../ui/input/MyInput";
 import {AuthContext} from "../context";
+import { useCookies } from 'react-cookie';
+
 
 
 //поле для ввода почты
@@ -13,16 +13,17 @@ const Login = () => {
         setEmail(event.target.value)
     };
 
-    const {isAuth, setIsAuth, setPerson} = useContext(AuthContext);
+    const {isAuth, fContext, setIsAuth, setPerson} = useContext(AuthContext);
+    const [cookies, setCookie] = useCookies(['faircookie']);
 
     const login = (event) => {
         event.preventDefault();
         setIsAuth(true);
         setPerson(email);
-        localStorage.setItem('auth', 'true')
-    }
 
-    console.log(isAuth);
+        setCookie('auth', isAuth,{path: '/'})
+        setCookie('context', fContext,{path: '/'})
+    }
 
     return (
         <div className={'login'}>

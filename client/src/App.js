@@ -6,6 +6,7 @@ import AppRouter from "./router/AppRouter";
 import {useEffect, useState} from "react";
 import {AuthContext} from "./context";
 import Navbar from "./ui/navbar/Navbar";
+import { useCookies } from 'react-cookie';
 
 // roles
 // 1 == student
@@ -16,6 +17,7 @@ function App() {
 
     const [isAuth, setIsAuth] = useState(false);
     const [fContext, setFContext] = useState(FContext);
+    const [cookies, setCookie] = useCookies(['faircookie']);
 
     const setPerson = (email) => {
         let newFContext = fContext
@@ -31,8 +33,11 @@ function App() {
     }
 
     useEffect( () => {
-        if (localStorage.getItem('auth')){
-            setIsAuth(true)
+        if (typeof cookies.auth != undefined){
+            setIsAuth(cookies.auth)
+        }
+        if (typeof cookies.context != undefined){
+            setIsAuth(cookies.context)
         }
     }, [])
 
