@@ -76,6 +76,6 @@ type Queue struct {
 }
 
 type Tasks struct {
-	Intent string `json:"intent"`
-	Tasks  []int
+	Intent string
+	Tasks  []int32 `db:"task_id"`
 }

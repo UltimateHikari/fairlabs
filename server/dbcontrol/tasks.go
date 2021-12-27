@@ -21,13 +21,27 @@ const (
 	follow_query      = `INSERT INTO participants(user_id, course_id, $3) 
 	SELECT user_id, $2 as course_id FROM users WHERE email = $1;`
 	teacher_role = "TEACHER"
+	submit_query = `INSERT INTO submits(course_id, user_id, task_id, task_status)
+	SELECT $1 as course_id, (SELECT user_id FROM users WHERE email = $2),
+	unnest($3) as task_id, $4 as task_status;`
+	query_query = `SELECT task_id FROM submits WHERE
+	course_id = $1 AND
+	user_id = (SELECT user_id FROM users WHERE email = $2) AND
+	task_status = $3
+	GROUP BY
+	task_id;`
 )
 
 func (c *DBControl) GetQueue(course_id int) (*spec.Queue, error) {
 	var queue spec.Queue
 	var err error
 	ctx := context.Background()
-	if err := pgxscan.Select(ctx, c.pool, &(queue.Queue), queue_query, course_id); err != nil {
+	if err := pgxscan.Select(
+		ctx,
+		c.pool,
+		&(queue.Queue),
+		queue_query,
+		course_id); err != nil {
 		log.Error(err)
 	}
 	return &queue, err
@@ -37,7 +51,12 @@ func (c *DBControl) GetMyCourses(email string) ([]*spec.Course, error) {
 	var courses []*spec.Course
 	var err error
 	ctx := context.Background()
-	if err := pgxscan.Select(ctx, c.pool, &courses, my_courses_query, email); err != nil {
+	if err := pgxscan.Select(
+		ctx,
+		c.pool,
+		&courses,
+		my_courses_query,
+		email); err != nil {
 		log.Error(err)
 	}
 	return courses, err
@@ -47,7 +66,11 @@ func (c *DBControl) GetAllCourses() ([]*spec.Course, error) {
 	var courses []*spec.Course
 	var err error
 	ctx := context.Background()
-	if err := pgxscan.Select(ctx, c.pool, &courses, all_courses_query); err != nil {
+	if err := pgxscan.Select(
+		ctx,
+		c.pool,
+		&courses,
+		all_courses_query); err != nil {
 		log.Error(err)
 	}
 	return courses, err
@@ -55,8 +78,9 @@ func (c *DBControl) GetAllCourses() ([]*spec.Course, error) {
 
 func (c *DBControl) Follow(email string, id int) error {
 	var err error
+	ctx := context.Background()
 	if _, err = c.pool.Exec(
-		context.Background(),
+		ctx,
 		follow_query,
 		email,
 		id,
@@ -64,4 +88,38 @@ func (c *DBControl) Follow(email string, id int) error {
 		log.Error(err)
 	}
 	return err
+}
+
+func (c *DBControl) Submit(email string, id int, tasks *spec.Tasks) error {
+	var err error
+	ctx := context.Background()
+	log.Info(tasks.Tasks)
+	if _, err = c.pool.Exec(
+		ctx,
+		submit_query,
+		id,
+		email,
+		tasks.Tasks,
+		tasks.Intent); err != nil {
+		log.Error(err)
+	}
+	return err
+}
+
+func (c *DBControl) QuerySubmitsWithStatus(email string, id int, tasks *spec.Tasks) (*spec.Tasks, error) {
+	var res spec.Tasks
+	var err error
+	ctx := context.Background()
+	res.Intent = tasks.Intent
+	if err := pgxscan.Select(
+		ctx,
+		c.pool,
+		&(res.Tasks),
+		query_query,
+		id,
+		email,
+		tasks.Intent); err != nil {
+		log.Error(err)
+	}
+	return &res, err
 }

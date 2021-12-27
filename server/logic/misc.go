@@ -1,14 +1,16 @@
 package logic
 
 import (
-	"errors"
 	db "fairlabs-server/dbcontrol"
 	"fairlabs-server/logic/spec"
 )
 
 func LookupGoalService(context *spec.Context) (*spec.Goal, error) {
-	if context.Email == "" {
-		return nil, errors.New("Bad context: no email")
+	if err := VerifyEmail(context.Email); err != nil {
+		return nil, err
+	}
+	if err := VerifyCourse(context.CourseId); err != nil {
+		return nil, err
 	}
 	goal, err := db.GetInstance().LookupGoal(context.Email, context.CourseId)
 	return goal, err
@@ -33,15 +35,21 @@ func ProgressService(context *spec.Context) (*spec.ProgressDTO, error) {
 }
 
 func PriorityService(context *spec.Context, priority bool) error {
-	if context.Email == "" {
-		return errors.New("Bad context: no email")
+	if err := VerifyEmail(context.Email); err != nil {
+		return err
+	}
+	if err := VerifyCourse(context.CourseId); err != nil {
+		return err
 	}
 	return db.GetInstance().SetPriority(priority, context.Email, context.CourseId)
 }
 
 func GoalService(context *spec.Context, goal *spec.Goal) error {
-	if context.Email == "" {
-		return errors.New("Bad context: no email")
+	if err := VerifyEmail(context.Email); err != nil {
+		return err
+	}
+	if err := VerifyCourse(context.CourseId); err != nil {
+		return err
 	}
 	return db.GetInstance().SetGoal(goal.Mark, context.Email, context.CourseId)
 }
