@@ -7,7 +7,7 @@ const PublicRoute = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext);
 
     return isAuth ? (
-        <Navigate to="/profile" replace />
+        <Navigate to="/courses" replace />
     ) : (
         <Outlet/>
     );
