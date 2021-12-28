@@ -1,0 +1,523 @@
+{
+	"info": {
+		"_postman_id": "3de9c706-d689-44a5-8325-c91c9252424d",
+		"name": "fairlabs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adding new course",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "image/jpeg, */*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"a.rudometov@g.nsu.ru\",\n    \"username\": \"Andrey\",\n    \"name\": \"course\",\n    \"group\": 19202,\n    \"amount\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/admin/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"admin",
+						"add"
+					],
+					"query": [
+						{
+							"key": "Connection",
+							"value": "close",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sanding conditions",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"a.rudometov@g.nsu.ru\",\n    \"username\" : \"Andrey\",\n    \"course\" : 1,\n    \"id\" : 1,\n    \"data\" : [\"21:1, 22:2\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/admin/cond",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"admin",
+						"cond"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Checking algos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"To be json\", function () {\r",
+							"    pm.response.to.be.json\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check algo id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var size = jsonData.size;\r",
+							"    for (var alg_id = 0; alg_id < size; alg_id++){\r",
+							"        pm.expect(jsonData.algos[alg_id].id).to.eql(alg_id+1);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check algo name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var size = jsonData.size;\r",
+							"    for (var alg_id = 0; alg_id < size; alg_id++){\r",
+							"        pm.expect(jsonData.algos[alg_id].name).to.be.string;\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/admin/get/algo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"admin",
+						"get",
+						"algo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit course's algo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"a.rudometov@g.nsu.ru\",\n    \"username\" : \"Andrey\",\n    \"course\" : 1,\n    \"id\" : 1\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/admin/algo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"admin",
+						"algo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getting mycourses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get courses\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.courses).to.be.not.null;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"a.rudomehjtov@g.nsu.ru\",\n    \"username\" : \"Andrey Rudometov\",\n    \"group\" : 19212\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/mycourses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"mycourses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getting goals",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\"  : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/get/goal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"get",
+						"goal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set goals",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 2,\n    \"mark\" : 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/goal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"goal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Declare priority",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 2,\n    \"priority\" : false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/misc/priority",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"misc",
+						"priority"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "See queue",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19212,\n    \"course\" : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/queue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"queue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trying to get all courses (not admin)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"a.rudmetov@g.nsu.ru\",\n    \"username\" : \"Andrey\",\n    \"group\" : 19212\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/allcourses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"allcourses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit planned",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"a.rudometov@g.nsu.ru\",\n    \"username\" : \"Andrey\",\n    \"group\" : 19201,\n    \"intent\" : \"PLANNED\",\n    \"tasks\" : [1,2,3,4,5]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/submit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"submit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getting tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"a.rudometov@g.nsu.ru\",\n    \"username\" : \"test\",\n    \"group\" : 19201,\n    \"intent\" : \"EMPTY\",\n    \"tasks\" : []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trying to get all courses (admin)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"a.rudometov@g.nsu.ru\",\r\n    \"username\" : \"Andrey\",\r\n    \"group\" : 19201\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/tasks/allcourses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"tasks",
+						"allcourses"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
